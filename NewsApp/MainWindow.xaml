@@ -1,0 +1,13 @@
+﻿<Window x:Class="NewsApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NewsApp"
+        mc:Ignorable="d"
+        Title="NewsApp" Height="350" Width="525" Visibility="Visible" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Closing="Window_Closing" Loaded="Window_Loaded" FontSize="16">
+    <DockPanel>
+        <TextBox x:Name="Log" TextWrapping="Wrap" IsReadOnly="True" VerticalScrollBarVisibility="Auto" DockPanel.Dock="Top" MinHeight="290" />
+        <TextBlock Text="News App © 2015 -- developed by bajdcc" Height="27.376" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="98.131,0" d:LayoutOverrides="VerticalAlignment" DockPanel.Dock="Bottom" />
+    </DockPanel>
+</Window>
