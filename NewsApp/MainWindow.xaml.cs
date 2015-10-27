@@ -28,9 +28,12 @@ namespace NewsApp
             {
                 Thread.Sleep(TimeSpan.FromSeconds(3));
                 Dispatcher.Invoke(() =>
+                {
                     BeginAnimation(UIElement.OpacityProperty,
                     new DoubleAnimation(0, 1,
-                    new Duration(TimeSpan.FromSeconds(2)))));
+                    new Duration(TimeSpan.FromSeconds(2))));
+                    Activate();
+                });
             });
         }
 
@@ -57,6 +60,14 @@ namespace NewsApp
                 Thread.Sleep(TimeSpan.FromSeconds(2));
                 Dispatcher.Invoke(() => Close());
             });
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
         }
     }
 }

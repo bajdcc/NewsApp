@@ -93,6 +93,7 @@
     <Compile Include="MainOverlay.xaml.cs">
       <DependentUpon>MainOverlay.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Util\AppHelper.cs" />
     <Compile Include="Util\UIHelper.cs" />
     <Page Include="MainOverlay.xaml">
       <SubType>Designer</SubType>

@@ -10,13 +10,17 @@ namespace NewsApp
     /// </summary>
     public partial class App : Application
     {
+        static private Mutex mutex;
+
         protected override void OnStartup(StartupEventArgs e)
         {
             bool isNew;
-            var mutex = new Mutex(true, "NewsApp#bajdcc-v1.0", out isNew);
+            mutex = new Mutex(true, "NewsApp#bajdcc-v1.0", out isNew);
             if (!isNew)
             {
+                ActivateOtherWindow();
                 Shutdown();
+                return;
             }
 
             var ss = new SplashScreen("splash.jpg");
@@ -34,6 +38,17 @@ namespace NewsApp
                 });
             });
             base.OnStartup(e);
+        }
+
+        private void ActivateOtherWindow()
+        {
+            var other = Util.AppHelper.FindWindow(null, Resources["WindowCaption"] as string);
+            if (other != IntPtr.Zero)
+            {
+                Util.AppHelper.SetForegroundWindow(other);
+                if (Util.AppHelper.IsIconic(other))
+                    Util.AppHelper.OpenIcon(other);
+            }
         }
     }
 }
