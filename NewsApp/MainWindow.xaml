@@ -15,7 +15,7 @@
                 </DockPanel>
                 <Border>
                     <DockPanel>
-                        <TextBox x:Name="Log" TextWrapping="Wrap" IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" DockPanel.Dock="Top" MinHeight="285" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" />
+                        <TextBox x:Name="Log" TextWrapping="Wrap" IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" DockPanel.Dock="Top" MinHeight="285" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" FontSize="12" FontFamily="SimSun" />
                         <Label Content="News App © 2015 -- developed by bajdcc" HorizontalAlignment="Center" VerticalAlignment="Bottom" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Bottom" />
                     </DockPanel>
                 </Border>

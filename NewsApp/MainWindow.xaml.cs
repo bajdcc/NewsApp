@@ -16,8 +16,8 @@ namespace NewsApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        static private MainWindow _this;
-        Queue<string> _msgQueue = new Queue<string>(100);
+        static MainWindow _this;
+        static Queue<string> _msgQueue = new Queue<string>(100);
         NewsMachine _newsMachine;
 
         public MainWindow()
@@ -72,7 +72,7 @@ namespace NewsApp
             Task.Factory.StartNew(() =>
             {
                 Thread.Sleep(TimeSpan.FromSeconds(2));
-                Dispatcher.Invoke(() => Close());
+                Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => Close()));
             });
         }
 
@@ -86,6 +86,7 @@ namespace NewsApp
 
         static public void TraceOutput(IMachineContext context, string msg)
         {
+            _msgQueue.Enqueue(msg);
             if (_this != null)
             {
                 _this.InternTraceOutput(msg);
@@ -94,10 +95,10 @@ namespace NewsApp
 
         private void InternTraceOutput(string msg)
         {
+            var text = string.Join("\n", _msgQueue);
             Dispatcher.Invoke(() =>
             {
-                this._msgQueue.Enqueue(msg);
-                this.Log.Text = string.Join("\n", this._msgQueue);
+                this.Log.Text = string.Join("\n", text);
                 this.Log.ScrollToEnd();
             });
         }

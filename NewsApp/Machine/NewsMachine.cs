@@ -12,7 +12,12 @@ namespace NewsApp.Machine
         {
             this.RetryCount = 5;
             this.RetryTimeout = TimeSpan.FromSeconds(1);
+        }
+
+        public new void Start()
+        {
             this.SetState(new State.NewsIdleState(this));
+            base.Start();
         }
     }
 }

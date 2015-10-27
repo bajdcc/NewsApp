@@ -27,7 +27,8 @@ namespace NewsApp.Machine.State
             if (this._start)
             {
                 Trace("Received message: " + msg.ToString());
-                this.Context.AddMessage(msg);
+                base.Context.AddMessage(msg);
+                base.Context.SetState(new NewsBeginState(base.Context));
             }
         }
 
@@ -39,6 +40,12 @@ namespace NewsApp.Machine.State
                 {
                     Trace("Idle...");
                     this._timer.Restart();
+
+                    OnMessage(new Message() { Origin = "example", Content = "ni hao" });
+                }
+                else
+                {
+
                 }
             }
         }
