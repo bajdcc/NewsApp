@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reactive.Linq;
 using System.Threading;
@@ -14,6 +15,9 @@ namespace NewsApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        static private MainWindow _this;
+        Queue<string> _msgQueue = new Queue<string>(100);
+
         public MainWindow()
         {
             InitializeComponent();
@@ -21,6 +25,7 @@ namespace NewsApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            _this = this;
             Observable.Start(() =>
             {
                 Dispatcher.Invoke(() =>
@@ -71,6 +76,21 @@ namespace NewsApp
             {
                 DragMove();
             }
+        }
+
+        static public void TraceOutput(string msg)
+        {
+            if (_this != null)
+            {
+                _this.InternTraceOutput(msg);
+            }
+        }
+
+        private void InternTraceOutput(string msg)
+        {
+            this._msgQueue.Enqueue(msg);
+            this.Log.Text = string.Join("\n", this._msgQueue);
+            this.Log.ScrollToEnd();
         }
     }
 }
