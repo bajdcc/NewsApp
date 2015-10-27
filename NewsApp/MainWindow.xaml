@@ -5,9 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NewsApp"
         mc:Ignorable="d"
-        Title="NewsApp" Height="350" Width="525" Visibility="Visible" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Closing="Window_Closing" Loaded="Window_Loaded" FontSize="16">
-    <DockPanel>
-        <TextBox x:Name="Log" TextWrapping="Wrap" IsReadOnly="True" VerticalScrollBarVisibility="Auto" DockPanel.Dock="Top" MinHeight="290" />
-        <TextBlock Text="News App © 2015 -- developed by bajdcc" Height="27.376" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="98.131,0" d:LayoutOverrides="VerticalAlignment" DockPanel.Dock="Bottom" />
-    </DockPanel>
+        x:Name="AppWindow" Title="NewsApp" Height="350" Width="525" Visibility="Visible" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" FontSize="16" AllowsTransparency="True" WindowStyle="None" PreviewKeyDown="Window_PreviewKeyDown" ShowInTaskbar="False" BorderThickness="1" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}">
+    <Border>
+        <StackPanel>
+            <DockPanel>
+                <Label Content="{Binding ElementName=AppWindow, Path=Title}"/>
+                <Button Content="X" Click="Button_Click" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+            </DockPanel>
+            <Border>
+                <DockPanel>
+                    <TextBox x:Name="Log" TextWrapping="Wrap" IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" DockPanel.Dock="Top" MinHeight="285" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" />
+                    <Label Content="News App © 2015 -- developed by bajdcc" HorizontalAlignment="Center" VerticalAlignment="Bottom" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Bottom" />
+                </DockPanel>
+            </Border>
+        </StackPanel>
+    </Border>
 </Window>
