@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NewsApp.Machine;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reactive.Linq;
@@ -17,6 +18,7 @@ namespace NewsApp
     {
         static private MainWindow _this;
         Queue<string> _msgQueue = new Queue<string>(100);
+        NewsMachine _newsMachine;
 
         public MainWindow()
         {
@@ -43,6 +45,10 @@ namespace NewsApp
                     Activate();
                 });
             });
+
+            _newsMachine = new NewsMachine();
+            _newsMachine.OnLogging += TraceOutput;
+            _newsMachine.Start();
         }
 
         private void Window_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -78,7 +84,7 @@ namespace NewsApp
             }
         }
 
-        static public void TraceOutput(string msg)
+        static public void TraceOutput(IMachineContext context, string msg)
         {
             if (_this != null)
             {
@@ -88,9 +94,12 @@ namespace NewsApp
 
         private void InternTraceOutput(string msg)
         {
-            this._msgQueue.Enqueue(msg);
-            this.Log.Text = string.Join("\n", this._msgQueue);
-            this.Log.ScrollToEnd();
+            Dispatcher.Invoke(() =>
+            {
+                this._msgQueue.Enqueue(msg);
+                this.Log.Text = string.Join("\n", this._msgQueue);
+                this.Log.ScrollToEnd();
+            });
         }
     }
 }

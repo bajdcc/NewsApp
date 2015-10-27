@@ -26,7 +26,7 @@ namespace NewsApp
             }
             
             var ss = new SplashScreen("splash.jpg");
-            ss.Show(false, true);
+            ss.Show(false, false);
             Task.Factory.StartNew(() =>
             {
                 Thread.Sleep(TimeSpan.FromSeconds(3));

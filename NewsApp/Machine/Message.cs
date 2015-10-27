@@ -12,5 +12,9 @@ namespace NewsApp.Machine
         public string Origin { get; set; }
         public string Content { get; set; }
 
+        public override string ToString()
+        {
+            return Empty ? string.Empty : string.Format("[{0}] {1}", Origin, Content);
+        }
     }
 }

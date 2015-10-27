@@ -2,12 +2,12 @@
 
 namespace NewsApp.Machine.State
 {
-    class LoggingStateDecorator : IState
+    class LoggingState : IState
     {
         private readonly MachineContext context;
         private readonly IState decoratee;
 
-        public LoggingStateDecorator(IState decoratee, MachineContext context)
+        public LoggingState(IState decoratee, MachineContext context)
         {
             this.decoratee = decoratee;
             this.context = context;
@@ -20,25 +20,25 @@ namespace NewsApp.Machine.State
 
         public void OnCancel()
         {
-            TraceHelper.Trace(this.GetStateName() + " OnCancel: ", this.context);
+            this.context.Trace(this.GetStateName() + " OnCancel: ");
             this.decoratee.OnCancel();
         }
 
         public void OnMessage(Message msg)
         {
-            TraceHelper.Trace(this.GetStateName() + " OnMessage: " +　msg, this.context);
+            this.context.Trace(this.GetStateName() + " OnMessage: " +　msg);
             this.decoratee.OnMessage(msg);
         }
 
         public void OnStart()
         {
-            TraceHelper.Trace(this.GetStateName() + " OnStart: ", this.context);
+            this.context.Trace(this.GetStateName() + " OnStart: ");
             this.decoratee.OnStart();
         }
 
         public void OnStateEnter()
         {
-            TraceHelper.Trace(this.GetStateName() + " OnStateEnter: ", this.context);
+            this.context.Trace(this.GetStateName() + " OnStateEnter: ");
             this.decoratee.OnStateEnter();
         }
 

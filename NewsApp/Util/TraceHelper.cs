@@ -10,24 +10,17 @@ namespace NewsApp.Util
     static public class TraceHelper
     {
         public static bool Enabled { set; get; }
+
         static TraceHelper()
         {
             Enabled = true;
         }
 
-        internal static void Trace(string message, IMachineContext context)
+        internal static void Trace(IMachineContext context, string message)
         {
             if (Enabled)
             {
-                MainWindow.TraceOutput(string.Join(context.ToString(), ": ",message));
-            }
-        }
-
-        internal static void Trace(string message)
-        {
-            if (Enabled)
-            {
-                MainWindow.TraceOutput(message);
+                context.Log(string.Format("{0} {1} {2}", DateTime.Now.ToLocalTime(), context.ToString(), message));
             }
         }
     }

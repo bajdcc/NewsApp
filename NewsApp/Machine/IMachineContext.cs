@@ -12,6 +12,8 @@ namespace NewsApp.Machine
 
     public delegate void ProgressHandler(IMachineContext context, int progress);
 
+    public delegate void LoggingHandler(IMachineContext context, string msg);
+
     public interface IMachineContext
     {
         event ErrorHandler OnError;
@@ -19,6 +21,14 @@ namespace NewsApp.Machine
         event EventHandler OnFinished;
 
         event ProgressHandler OnProgress;
+
+        event LoggingHandler OnLogging;
+
+        void Log(string msg);
+
+        void Trace(string msg);
+
+        void AddMessage(Message msg);
 
         int RetryCount { get; set; }
 

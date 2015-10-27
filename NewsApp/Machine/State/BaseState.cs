@@ -27,6 +27,7 @@ namespace NewsApp.Machine.State
 
         public virtual void OnStateEnter()
         {
+
         }
 
         public virtual void OnTimer()
@@ -34,5 +35,10 @@ namespace NewsApp.Machine.State
         }
 
         protected MachineContext Context { get; private set; }
+
+        protected void Trace(string msg)
+        {
+            this.Context.Trace(msg);
+        }
     }
 }

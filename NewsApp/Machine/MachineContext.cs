@@ -1,9 +1,10 @@
 ﻿using NewsApp.Machine.State;
 using System;
+using System.Collections.Generic;
 
 namespace NewsApp.Machine
 {
-    public class MachineContext : IMachineContext
+    public class MachineContext : IMachineContext, IDisposable
     {
         protected IState state;
 
@@ -13,9 +14,13 @@ namespace NewsApp.Machine
 
         public event ProgressHandler OnProgress;
 
+        public event LoggingHandler OnLogging;
+
+        protected Queue<Message> queue;
+
         public MachineContext()
         {
-            
+            queue = new Queue<Message>();
         }
 
         public void Cancel()
@@ -29,7 +34,7 @@ namespace NewsApp.Machine
             {
                 return state;
             }
-            return new LoggingStateDecorator(state, this);
+            return new LoggingState(state, this);
         }
 
         internal void RaiseOnError(string error)
@@ -56,6 +61,11 @@ namespace NewsApp.Machine
             }
         }
 
+        public void AddMessage(Message msg)
+        {
+            queue.Enqueue(msg);
+        }
+
         internal virtual void SetState(IState newState)
         {
             if (newState == null)
@@ -71,10 +81,28 @@ namespace NewsApp.Machine
             this.state.OnStart();
         }
 
+        public void Log(string msg)
+        {
+            if (OnLogging != null)
+            {
+                OnLogging(this, msg);
+            }
+        }
+
+        public void Trace(string msg)
+        {
+            Util.TraceHelper.Trace(this, msg);
+        }
+
         public override string ToString()
         {
-            return base.ToString();
-        }       
+            return "Queue#" + queue.Count;
+        }
+
+        public virtual void Dispose()
+        {
+
+        }
 
         public int RetryCount { get; set; }
 

@@ -91,15 +91,23 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Machine\IMachineContext.cs" />
-    <Compile Include="Machine\State\LoggingStateDecorator.cs" />
+    <Compile Include="Machine\NewsMachine.cs" />
+    <Compile Include="Machine\State\LoggingState.cs" />
     <Compile Include="Machine\Message.cs" />
     <Compile Include="Machine\State\BaseState.cs" />
     <Compile Include="Machine\MachineContext.cs" />
     <Compile Include="Machine\State\IState.cs" />
+    <Compile Include="Machine\State\NewsEndState.cs" />
+    <Compile Include="Machine\State\NewsWaitingState.cs" />
+    <Compile Include="Machine\State\NewsQueueState.cs" />
+    <Compile Include="Machine\State\NewsBeginState.cs" />
+    <Compile Include="Machine\State\NewsIdleState.cs" />
+    <Compile Include="Machine\TimedoutMachine.cs" />
     <Compile Include="MainOverlay.xaml.cs">
       <DependentUpon>MainOverlay.xaml</DependentUpon>
     </Compile>
     <Compile Include="Util\AppHelper.cs" />
+    <Compile Include="Util\StaticTimer.cs" />
     <Compile Include="Util\TraceHelper.cs" />
     <Compile Include="Util\UIHelper.cs" />
     <Page Include="MainOverlay.xaml">
