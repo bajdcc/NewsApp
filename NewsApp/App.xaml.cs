@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,20 +24,16 @@ namespace NewsApp
                 Shutdown();
                 return;
             }
-
+            
             var ss = new SplashScreen("splash.jpg");
             ss.Show(false, true);
             Task.Factory.StartNew(() =>
             {
                 Thread.Sleep(TimeSpan.FromSeconds(3));
-                Dispatcher.Invoke(() =>
-                {
-                    ss.Close(TimeSpan.FromSeconds(1));
-                });
-                Dispatcher.Invoke(() =>
-                {
-                    MainWindow.Show();
-                });
+                new List<Action>() {
+                    () => ss.Close(TimeSpan.FromSeconds(1)),
+                    () => MainWindow.Show(),
+                }.ToObservable().Subscribe(x => Dispatcher.Invoke(x));
             });
             base.OnStartup(e);
         }

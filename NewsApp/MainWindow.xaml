@@ -7,12 +7,7 @@
         mc:Ignorable="d"
         x:Name="AppWindow" Title="{StaticResource WindowCaption}" Height="350" Width="525" Visibility="Visible" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" FontSize="16" AllowsTransparency="True" WindowStyle="None" PreviewKeyDown="Window_PreviewKeyDown" ShowInTaskbar="False" BorderThickness="1" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" MouseDown="Window_MouseDown">
     <Grid>
-        <Border>
-            <Border.Effect>
-                <DropShadowEffect ShadowDepth="1" BlurRadius="6" Direction="270" Opacity="0.75" Color="#FF211613"/>
-            </Border.Effect>
-        </Border>
-        <Border>            
+        <Border>      
             <StackPanel>
                 <DockPanel>
                     <Label Content="NewsApp"/>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,13 +21,15 @@ namespace NewsApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Dispatcher.Invoke(() =>
+            Observable.Start(() =>
+            {
+                Dispatcher.Invoke(() =>
                     BeginAnimation(UIElement.OpacityProperty,
                     new DoubleAnimation(0, 0,
                     new Duration(TimeSpan.FromSeconds(1)))));
-            Task.Factory.StartNew(() =>
+            }).Delay(TimeSpan.FromSeconds(3))
+            .Subscribe(_ =>
             {
-                Thread.Sleep(TimeSpan.FromSeconds(3));
                 Dispatcher.Invoke(() =>
                 {
                     BeginAnimation(UIElement.OpacityProperty,
