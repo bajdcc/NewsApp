@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NewsApp"
         mc:Ignorable="d"
-        Window.Title="MainOverlay" Window.WindowStyle="None" Window.AllowsTransparency="True" Control.Background="{x:Null}" >
+        Window.Title="MainOverlay" Window.WindowStyle="None" Window.AllowsTransparency="True" Control.Background="{x:Null}" ShowInTaskbar="False" Topmost="True" Deactivated="Window_Deactivated" SourceInitialized="Window_SourceInitialized" >
     <Grid>
         
     </Grid>

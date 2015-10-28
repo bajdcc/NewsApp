@@ -48,6 +48,7 @@ namespace NewsApp
 
             _newsMachine = new NewsMachine();
             _newsMachine.OnLogging += TraceOutput;
+            _newsMachine.MainDispatcher = Dispatcher;
             _newsMachine.Start();
         }
 
@@ -66,6 +67,7 @@ namespace NewsApp
 
         private void AnimateClose()
         {
+            _newsMachine.Cancel();
             BeginAnimation(UIElement.OpacityProperty,
                 new DoubleAnimation(1, 0,
                 new Duration(TimeSpan.FromSeconds(2))));
@@ -96,11 +98,11 @@ namespace NewsApp
         private void InternTraceOutput(string msg)
         {
             var text = string.Join("\n", _msgQueue);
-            Dispatcher.Invoke(() =>
+            Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() =>
             {
                 this.Log.Text = string.Join("\n", text);
                 this.Log.ScrollToEnd();
-            });
+            }));
         }
     }
 }

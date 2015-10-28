@@ -8,7 +8,6 @@ namespace NewsApp.Machine.State
 {
     class NewsIdleState : BaseState
     {
-        bool _start = false;
         Util.StaticTimer _timer;
 
         public NewsIdleState(MachineContext context) : base(context)
@@ -18,23 +17,23 @@ namespace NewsApp.Machine.State
 
         public override void OnStart()
         {
-            this._start = true;
+            base.Start = true;
             this._timer = new Util.StaticTimer(TimeSpan.FromSeconds(5));
         }
 
         public override void OnMessage(Message msg)
         {
-            if (this._start)
+            if (base.Start)
             {
-                Trace("Received message: " + msg.ToString());
-                base.Context.AddMessage(msg);
+                base.OnMessage(msg);
                 base.Context.SetState(new NewsBeginState(base.Context));
+                base.Context.Start();
             }
         }
 
         public override void OnTimer()
         {
-            if (this._start)
+            if (base.Start)
             {
                 if (this._timer.IsTimeout())
                 {

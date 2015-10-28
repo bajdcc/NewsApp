@@ -1,6 +1,8 @@
 ﻿using NewsApp.Machine.State;
 using System;
 using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace NewsApp.Machine
 {
@@ -10,7 +12,7 @@ namespace NewsApp.Machine
 
         public event ErrorHandler OnError;
 
-        public event EventHandler OnFinished;
+        public event FinishedHandler OnFinished;
 
         public event ProgressHandler OnProgress;
 
@@ -18,14 +20,33 @@ namespace NewsApp.Machine
 
         protected Queue<Message> queue;
 
+        private MainOverlay overlay;
+
+        private Dispatcher dispatcher;
+
         public MachineContext()
         {
             queue = new Queue<Message>();
         }
 
+        event FinishedHandler IMachineContext.OnFinished
+        {
+            add
+            {
+                throw new NotImplementedException();
+            }
+
+            remove
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public void Cancel()
         {
-
+            Dispose();
+            overlay.Close();
+            overlay = null;
         }
 
         protected virtual IState DecorateForLogging(IState state)
@@ -104,10 +125,51 @@ namespace NewsApp.Machine
 
         }
 
+        public async void OpenOverlay()
+        {
+            await MainDispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() =>
+            {
+                var overlay = new MainOverlay();
+                overlay.Background = System.Windows.Media.Brushes.Transparent;
+                overlay.Top = SystemParameters.WorkArea.Top + Util.UIHelper.MainOverlayHeight;
+                overlay.Left = SystemParameters.WorkArea.Left;
+                overlay.Height = SystemParameters.WorkArea.Height - Util.UIHelper.MainOverlayHeight;
+                overlay.Width = SystemParameters.WorkArea.Width;
+                this.overlay = overlay;
+            }));
+        }
+
+        public void CloseOverlay()
+        {
+            
+        }
+
         public int RetryCount { get; set; }
 
         public virtual TimeSpan RetryTimeout { get; set; }
 
         public object UserContext { get; set; }
+
+        public MainOverlay Overlay
+        {
+            get
+            {
+                return overlay;
+            }
+        }
+
+        public Dispatcher MainDispatcher
+        {
+            get
+            {
+                return dispatcher;
+            }
+
+            set
+            {
+                if (dispatcher == null)
+                    dispatcher = value;
+            }
+        }
     }
 }

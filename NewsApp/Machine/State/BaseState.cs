@@ -8,6 +8,8 @@ namespace NewsApp.Machine.State
 {
     class BaseState : IState
     {
+        private bool start = false;
+
         public BaseState(MachineContext context)
         {
             this.Context = context;
@@ -19,6 +21,8 @@ namespace NewsApp.Machine.State
 
         public virtual void OnMessage(Message msg)
         {
+            Trace("Received message: " + msg.ToString());
+            Context.AddMessage(msg);
         }
 
         public virtual void OnStart()
@@ -35,6 +39,19 @@ namespace NewsApp.Machine.State
         }
 
         protected MachineContext Context { get; private set; }
+
+        protected bool Start
+        {
+            get
+            {
+                return start;
+            }
+
+            set
+            {
+                start = value;
+            }
+        }
 
         protected void Trace(string msg)
         {

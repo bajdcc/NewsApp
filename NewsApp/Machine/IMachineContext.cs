@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace NewsApp.Machine
 {
     public delegate void ErrorHandler(IMachineContext context, string error);
 
-    public delegate void EventHandler(IMachineContext context);
+    public delegate void FinishedHandler(IMachineContext context);
 
     public delegate void ProgressHandler(IMachineContext context, int progress);
 
@@ -18,7 +19,7 @@ namespace NewsApp.Machine
     {
         event ErrorHandler OnError;
 
-        event EventHandler OnFinished;
+        event FinishedHandler OnFinished;
 
         event ProgressHandler OnProgress;
 
@@ -30,10 +31,18 @@ namespace NewsApp.Machine
 
         void AddMessage(Message msg);
 
+        void OpenOverlay();
+
+        void CloseOverlay();
+
+        MainOverlay Overlay { get; }
+
         int RetryCount { get; set; }
 
         TimeSpan RetryTimeout { get; set; }
 
         object UserContext { get; set; }
+
+        Dispatcher MainDispatcher { get; set; }
     }
 }

@@ -17,5 +17,9 @@ namespace NewsApp.Util
         static public extern bool IsIconic(IntPtr hWnd);
         [DllImport("user32")]
         static public extern bool OpenIcon(IntPtr hWnd);
+        [DllImport("user32")]
+        static public extern uint SetWindowLong(IntPtr hwnd, int nIndex, uint dwNewLong);
+        [DllImport("user32")]
+        static public extern uint GetWindowLong(IntPtr hwnd, int nIndex);
     }
 }
