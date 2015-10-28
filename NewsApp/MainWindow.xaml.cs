@@ -6,6 +6,7 @@ using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 
@@ -18,7 +19,9 @@ namespace NewsApp
     {
         static MainWindow _this;
         static Queue<string> _msgQueue = new Queue<string>(100);
-        NewsMachine _newsMachine;
+        private NewsMachine _newsMachine;
+        private NotifyIcon notifyIcon;
+        private bool intendClose = false;
 
         public MainWindow()
         {
@@ -46,10 +49,28 @@ namespace NewsApp
                 });
             });
 
+            notifyIcon = new NotifyIcon();
+            notifyIcon.BalloonTipText = "程序开始运行";
+            notifyIcon.Text = "托盘图标";
+            notifyIcon.Icon = System.Drawing.SystemIcons.WinLogo;
+            notifyIcon.Visible = true;
+            notifyIcon.ShowBalloonTip(2000);
+            notifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(notifyIcon_MouseClick);
+
+            MenuItem aboutMenu = new System.Windows.Forms.MenuItem("About", (obj, args) => System.Windows.MessageBox.Show(this, "NewsApp by bajdcc"));
+            MenuItem exitMenu = new System.Windows.Forms.MenuItem("Exit", (obj, args) => AnimateClose());
+
+            notifyIcon.ContextMenu = new ContextMenu(new MenuItem[] { aboutMenu, exitMenu });
+
             _newsMachine = new NewsMachine();
             _newsMachine.OnLogging += TraceOutput;
             _newsMachine.MainDispatcher = Dispatcher;
             _newsMachine.Start();
+        }
+
+        private void notifyIcon_MouseClick(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            Activate();
         }
 
         private void Window_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -67,7 +88,11 @@ namespace NewsApp
 
         private void AnimateClose()
         {
-            _newsMachine.Cancel();
+            if (!intendClose)
+                intendClose = true;
+            else
+                return;
+            InternClose();
             BeginAnimation(UIElement.OpacityProperty,
                 new DoubleAnimation(1, 0,
                 new Duration(TimeSpan.FromSeconds(2))));
@@ -101,8 +126,25 @@ namespace NewsApp
             Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() =>
             {
                 this.Log.Text = string.Join("\n", text);
+                this.Log.CaretIndex = this.Log.Text.Length;
                 this.Log.ScrollToEnd();
+                this.Log.Focus();
             }));
+        }
+        private void InternClose()
+        {
+            _newsMachine.Cancel();
+            notifyIcon.Dispose();
+        }
+
+        private void AppWindow_Closing(object sender, CancelEventArgs e)
+        {
+            if (!intendClose)
+                intendClose = true;
+            else
+                return;
+
+            InternClose();
         }
     }
 }

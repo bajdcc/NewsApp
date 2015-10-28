@@ -26,8 +26,6 @@ namespace NewsApp.Machine.State
             if (base.Start)
             {
                 base.OnMessage(msg);
-                base.Context.SetState(new NewsBeginState(base.Context));
-                base.Context.Start();
             }
         }
 
@@ -45,6 +43,16 @@ namespace NewsApp.Machine.State
                 else
                 {
 
+                }
+
+                if (base.Context.IdleTimer.IsTimeout())
+                {
+                    if (base.Context.HasMessage())
+                    {
+                        base.Context.IdleTimer.Restart();
+                        base.Context.SetState(new NewsBeginState(base.Context));
+                        base.Context.Start();
+                    }
                 }
             }
         }

@@ -21,10 +21,10 @@
         </Storyboard>
         <Storyboard x:Key="TimeFadeIn">
             <DoubleAnimation BeginTime="0:0:2" Duration="0:0:1" Storyboard.TargetName="time" From="0.0" To="1.0" Storyboard.TargetProperty="Opacity"/>
-            <DoubleAnimation BeginTime="0:0:3" Duration="0:0:1" Storyboard.TargetName="bg" From="0.0" To="0.9" Storyboard.TargetProperty="Opacity"/>
+            <DoubleAnimation BeginTime="0:0:3" Duration="0:0:1" Storyboard.TargetName="bg" From="0.0" To="0.5" Storyboard.TargetProperty="Opacity"/>
             <ColorAnimation BeginTime="0:0:4" Duration="0:0:1" Storyboard.TargetName="time" From="Black" To="White" Storyboard.TargetProperty="Foreground.(SolidColorBrush.Color)"/>
             <ColorAnimation BeginTime="0:0:4" Duration="0:0:1" Storyboard.TargetName="time" From="Transparent" To="Red" Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"/>
-            <DoubleAnimation BeginTime="0:0:5" Duration="0:0:3" Storyboard.TargetName="bg" From="0.1" To="0.9" Storyboard.TargetProperty="Opacity"/>
+            <DoubleAnimation BeginTime="0:0:5" Duration="0:0:3" Storyboard.TargetName="bg" From="0.5" To="1.0" Storyboard.TargetProperty="Opacity"/>
             <DoubleAnimation BeginTime="0:0:5" Duration="0:0:4" Storyboard.TargetName="bg" From="{StaticResource MainOverlayTimeWidth}" To="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Width}" Storyboard.TargetProperty="Width"/>
             <ColorAnimation BeginTime="0:0:5" Duration="0:0:3" Storyboard.TargetName="bg" From="Gray" To="Black" Storyboard.TargetProperty="Fill.(SolidColorBrush.Color)"/>
         </Storyboard>

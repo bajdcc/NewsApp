@@ -10,13 +10,14 @@ namespace NewsApp.Machine
     {
         public NewsMachine()
         {
-            this.RetryCount = 5;
-            this.RetryTimeout = TimeSpan.FromSeconds(1);
+            base.RetryCount = 5;
+            base.RetryTimeout = TimeSpan.FromSeconds(1);
+            base.IdleTimer = new Util.StaticTimer(TimeSpan.FromSeconds(5));
         }
 
         public new void Start()
         {
-            this.SetState(new State.NewsIdleState(this));
+            base.SetState(new State.NewsIdleState(this));
             base.Start();
         }
     }

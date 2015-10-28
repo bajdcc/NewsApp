@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NewsApp"
         mc:Ignorable="d"
-        x:Name="AppWindow" Title="{StaticResource WindowCaption}" Height="350" Width="525" Visibility="Visible" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" FontSize="16" AllowsTransparency="True" WindowStyle="None" PreviewKeyDown="Window_PreviewKeyDown" ShowInTaskbar="False" BorderThickness="1" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" MouseDown="Window_MouseDown">
+        x:Name="AppWindow" Title="{StaticResource WindowCaption}" Height="350" Width="525" Visibility="Visible" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" FontSize="16" AllowsTransparency="True" WindowStyle="None" PreviewKeyDown="Window_PreviewKeyDown" ShowInTaskbar="False" BorderThickness="1" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" MouseDown="Window_MouseDown" Closing="AppWindow_Closing">
     <Grid>
         <Border>      
             <StackPanel>
@@ -15,7 +15,7 @@
                 </DockPanel>
                 <Border>
                     <DockPanel>
-                        <TextBox x:Name="Log" TextWrapping="Wrap" IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" DockPanel.Dock="Top" MinHeight="285" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" FontSize="12" FontFamily="SimSun" MaxHeight="285" />
+                        <TextBox x:Name="Log" TextWrapping="Wrap" IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" DockPanel.Dock="Top" MinHeight="285" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" FontSize="12" FontFamily="SimSun" MaxHeight="285" IsUndoEnabled="False" MaxLines="500" TextOptions.TextHintingMode="Animated" />
                         <Label Content="News App © 2015 -- developed by bajdcc" HorizontalAlignment="Center" VerticalAlignment="Bottom" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Bottom" />
                     </DockPanel>
                 </Border>

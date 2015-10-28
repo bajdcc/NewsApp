@@ -32,8 +32,11 @@ namespace NewsApp.Machine
         public void Cancel()
         {
             Dispose();
-            overlay.AnimationClose();
-            overlay = null;
+            if (overlay != null)
+            {
+                overlay.AnimationClose();
+                overlay = null;
+            }
         }
 
         protected virtual IState DecorateForLogging(IState state)
@@ -73,6 +76,12 @@ namespace NewsApp.Machine
         {
             queue.Enqueue(msg);
         }
+
+        public bool HasMessage()
+        {
+            return queue.Count > 0;
+        }
+
 
         internal virtual void SetState(IState newState)
         {
@@ -133,11 +142,13 @@ namespace NewsApp.Machine
             
         }
 
-        public int RetryCount { get; set; }
+        public int RetryCount { get; protected set; }
 
-        public virtual TimeSpan RetryTimeout { get; set; }
+        public TimeSpan RetryTimeout { get; protected set; }
 
-        public object UserContext { get; set; }
+        public object UserContext { get; protected set; }
+
+        public Util.StaticTimer IdleTimer { get; protected set; }
 
         public MainOverlay Overlay
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NewsApp.Util
 {
-    internal class StaticTimer
+    public class StaticTimer
     {
         private DateTime nextTimeout;
         private readonly TimeSpan timeout;
@@ -30,6 +30,16 @@ namespace NewsApp.Util
         public void Restart()
         {
             this.nextTimeout = DateTime.Now.Add(this.timeout);
+        }
+
+        public void SetMaxValue()
+        {
+            this.nextTimeout = DateTime.MaxValue;
+        }
+
+        public void SetMinValue()
+        {
+            this.nextTimeout = DateTime.MinValue;
         }
     }
 }

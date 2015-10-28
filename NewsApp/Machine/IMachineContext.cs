@@ -31,18 +31,22 @@ namespace NewsApp.Machine
 
         void AddMessage(Message msg);
 
+        bool HasMessage();
+
         void OpenOverlay();
 
         void CloseOverlay();
 
         MainOverlay Overlay { get; }
 
-        int RetryCount { get; set; }
+        int RetryCount { get; }
 
-        TimeSpan RetryTimeout { get; set; }
+        TimeSpan RetryTimeout { get; }
 
-        object UserContext { get; set; }
+        object UserContext { get; }
 
         Dispatcher MainDispatcher { get; set; }
+
+        Util.StaticTimer IdleTimer { get; }
     }
 }
