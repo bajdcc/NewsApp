@@ -32,7 +32,7 @@ namespace NewsApp.Machine
         public void Cancel()
         {
             Dispose();
-            overlay.Close();
+            overlay.AnimationClose();
             overlay = null;
         }
 
