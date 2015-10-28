@@ -5,8 +5,43 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NewsApp"
         mc:Ignorable="d"
-        Window.Title="MainOverlay" Window.WindowStyle="None" Window.AllowsTransparency="True" Control.Background="{x:Null}" ShowInTaskbar="False" Topmost="True" Deactivated="Window_Deactivated" SourceInitialized="Window_SourceInitialized" >
+        Window.Title="MainOverlay" Window.WindowStyle="None" Window.AllowsTransparency="True" Control.Background="{x:Static Brushes.Transparent}" ShowInTaskbar="False" Topmost="True" Deactivated="Window_Deactivated" SourceInitialized="Window_SourceInitialized" Loaded="Window_Loaded"
+        Height="{StaticResource MainOverlayHeight}" >
+    <Window.Resources>
+        <Storyboard x:Key="TimeMove">
+            <DoubleAnimationUsingKeyFrames BeginTime="0:0:2.5" Storyboard.TargetName="time" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseInOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="150">
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="TimeFadeIn">
+            <DoubleAnimation BeginTime="0:0:2" Duration="0:0:1" Storyboard.TargetName="time" From="0.0" To="1.0" Storyboard.TargetProperty="Opacity"/>
+            <DoubleAnimation BeginTime="0:0:3" Duration="0:0:1" Storyboard.TargetName="bg" From="0.0" To="0.9" Storyboard.TargetProperty="Opacity"/>
+            <ColorAnimation BeginTime="0:0:4" Duration="0:0:1" Storyboard.TargetName="time" From="Black" To="White" Storyboard.TargetProperty="Foreground.(SolidColorBrush.Color)"/>
+            <ColorAnimation BeginTime="0:0:4" Duration="0:0:1" Storyboard.TargetName="time" From="Transparent" To="Red" Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"/>
+            <DoubleAnimation BeginTime="0:0:5" Duration="0:0:3" Storyboard.TargetName="bg" From="0.1" To="0.9" Storyboard.TargetProperty="Opacity"/>
+            <DoubleAnimation BeginTime="0:0:5" Duration="0:0:4" Storyboard.TargetName="bg" From="{StaticResource MainOverlayTimeWidth}" To="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Width}" Storyboard.TargetProperty="Width"/>
+            <ColorAnimation BeginTime="0:0:5" Duration="0:0:3" Storyboard.TargetName="bg" From="Gray" To="Black" Storyboard.TargetProperty="Fill.(SolidColorBrush.Color)"/>
+        </Storyboard>
+    </Window.Resources>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Loaded">
+            <BeginStoryboard Storyboard="{Binding Source={StaticResource TimeMove}}"/>
+            <BeginStoryboard Storyboard="{Binding Source={StaticResource TimeFadeIn}}"/>
+        </EventTrigger>
+    </Window.Triggers>
     <Grid>
-        
+        <Label x:Name="time" FontSize="32" Width="{StaticResource MainOverlayTimeWidth}" FontFamily="Segoe UI" Content="" Panel.ZIndex="5" Height="{StaticResource MainOverlayDisplayHeight}" VerticalAlignment="Top" Opacity="0" HorizontalAlignment="Left">
+            <Label.RenderTransform>
+                <TranslateTransform/>
+            </Label.RenderTransform>
+        </Label>
+        <Rectangle x:Name="bg" Width="{StaticResource MainOverlayTimeWidth}" VerticalAlignment="Bottom" MinHeight="{StaticResource MainOverlayDisplayHeight}" Fill="Gray" Opacity="0" HorizontalAlignment="Left">
+        </Rectangle>
     </Grid>
 </Window>

@@ -10,8 +10,6 @@ namespace NewsApp.Util
 {
     public class UIHelper
     {
-        public static double MainOverlayHeight = 200;
-
         public double MeasureTextWidth(string text, double fontSize, string fontFamily)
         {
             var formattedText = new FormattedText(

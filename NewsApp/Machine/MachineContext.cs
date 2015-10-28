@@ -27,20 +27,7 @@ namespace NewsApp.Machine
         public MachineContext()
         {
             queue = new Queue<Message>();
-        }
-
-        event FinishedHandler IMachineContext.OnFinished
-        {
-            add
-            {
-                throw new NotImplementedException();
-            }
-
-            remove
-            {
-                throw new NotImplementedException();
-            }
-        }
+        }        
 
         public void Cancel()
         {
@@ -131,10 +118,12 @@ namespace NewsApp.Machine
             {
                 var overlay = new MainOverlay();
                 overlay.Background = System.Windows.Media.Brushes.Transparent;
-                overlay.Top = SystemParameters.WorkArea.Top + Util.UIHelper.MainOverlayHeight;
+                var mainOverlayHeight = (double)App.Current.Resources["MainOverlayHeight"];
+                overlay.Top = SystemParameters.WorkArea.Height - mainOverlayHeight;
                 overlay.Left = SystemParameters.WorkArea.Left;
-                overlay.Height = SystemParameters.WorkArea.Height - Util.UIHelper.MainOverlayHeight;
+                overlay.Height = mainOverlayHeight;
                 overlay.Width = SystemParameters.WorkArea.Width;
+                overlay.Show();
                 this.overlay = overlay;
             }));
         }

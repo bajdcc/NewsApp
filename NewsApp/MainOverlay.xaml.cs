@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace NewsApp
 {
@@ -19,6 +20,8 @@ namespace NewsApp
     /// </summary>
     public partial class MainOverlay : Window
     {
+        DispatcherTimer timer;
+
         public MainOverlay()
         {
             InitializeComponent();
@@ -37,6 +40,17 @@ namespace NewsApp
             IntPtr hwnd = new System.Windows.Interop.WindowInteropHelper(this).Handle;
             uint windowLong = Util.AppHelper.GetWindowLong(hwnd, -20);
             Util.AppHelper.SetWindowLong(hwnd, -20, windowLong | 0x20);
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            timer = new DispatcherTimer(TimeSpan.FromSeconds(1), DispatcherPriority.Normal, Timer_Tick, Dispatcher);
+            timer.Start();
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            time.Content = DateTime.Now.ToShortTimeString();
         }
     }
 }
