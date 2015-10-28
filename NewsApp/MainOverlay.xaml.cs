@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NewsApp.Machine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -50,7 +51,7 @@ namespace NewsApp
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            time.Content = DateTime.Now.ToShortTimeString();
+            time.Content = DateTime.Now.ToString("HH:mm");
         }
 
         public void AnimationClose()
@@ -63,6 +64,16 @@ namespace NewsApp
                 System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
                 Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => Close()));
             });
+        }
+
+        public double Marquee(Machine.IMachineContext context, Machine.NewsMessage msg)
+        {
+            return (double)Dispatcher.Invoke(new Func<double>(() =>
+            {
+                var marTextCtrl = new MarqueeText(msg);
+                mars.Children.Add(marTextCtrl);
+                return marTextCtrl.Time;
+            }));
         }
     }
 }

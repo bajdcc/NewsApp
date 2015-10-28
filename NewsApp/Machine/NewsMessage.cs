@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NewsApp.Machine
 {
-    public class Message
+    public class NewsMessage
     {
         public bool Empty { get; set; }
         public string Origin { get; set; }

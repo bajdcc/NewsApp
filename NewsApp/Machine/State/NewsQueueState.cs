@@ -12,5 +12,21 @@ namespace NewsApp.Machine.State
         {
 
         }
+
+        public override void OnStart()
+        {
+            base.Start = true;
+        }
+
+        public override void OnTimer()
+        {
+            if (base.Start && base.Context.HasMessage())
+            {
+                var time = base.Context.Marquee();
+                Trace("Marquee completed");
+                base.Context.SetState(new NewsWaitingState(base.Context, time));
+                base.Context.Start();
+            }
+        }
     }
 }

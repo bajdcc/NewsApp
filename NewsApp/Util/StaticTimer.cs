@@ -27,6 +27,11 @@ namespace NewsApp.Util
             return flag;
         }
 
+        public bool IsTimeoutOnce()
+        {
+            return DateTime.Now >= this.nextTimeout;
+        }
+
         public void Restart()
         {
             this.nextTimeout = DateTime.Now.Add(this.timeout);

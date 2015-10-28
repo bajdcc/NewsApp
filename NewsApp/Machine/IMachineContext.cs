@@ -15,6 +15,8 @@ namespace NewsApp.Machine
 
     public delegate void LoggingHandler(IMachineContext context, string msg);
 
+    public delegate double MarqueeHandler(IMachineContext context, NewsMessage msg);
+
     public interface IMachineContext
     {
         event ErrorHandler OnError;
@@ -25,17 +27,21 @@ namespace NewsApp.Machine
 
         event LoggingHandler OnLogging;
 
+        event MarqueeHandler OnMarquee;
+
         void Log(string msg);
 
         void Trace(string msg);
 
-        void AddMessage(Message msg);
+        void AddMessage(NewsMessage msg);
 
         bool HasMessage();
 
         void OpenOverlay();
 
         void CloseOverlay();
+
+        double Marquee();
 
         MainOverlay Overlay { get; }
 

@@ -54,16 +54,16 @@ namespace NewsApp
             notifyIcon.Text = "托盘图标";
             notifyIcon.Icon = System.Drawing.SystemIcons.WinLogo;
             notifyIcon.Visible = true;
-            notifyIcon.ShowBalloonTip(2000);
+            notifyIcon.ShowBalloonTip(1000);
             notifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(notifyIcon_MouseClick);
 
-            MenuItem aboutMenu = new System.Windows.Forms.MenuItem("About", (obj, args) => System.Windows.MessageBox.Show(this, "NewsApp by bajdcc"));
-            MenuItem exitMenu = new System.Windows.Forms.MenuItem("Exit", (obj, args) => AnimateClose());
+            var aboutMenu = new MenuItem("About", (obj, args) => System.Windows.MessageBox.Show(this, "NewsApp by bajdcc", "NewsApp"));
+            var exitMenu = new MenuItem("Exit", (obj, args) => AnimateClose());
 
             notifyIcon.ContextMenu = new ContextMenu(new MenuItem[] { aboutMenu, exitMenu });
 
             _newsMachine = new NewsMachine();
-            _newsMachine.OnLogging += TraceOutput;
+            _newsMachine.OnLogging += TraceOutput;            
             _newsMachine.MainDispatcher = Dispatcher;
             _newsMachine.Start();
         }

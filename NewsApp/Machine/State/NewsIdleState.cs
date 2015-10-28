@@ -21,7 +21,7 @@ namespace NewsApp.Machine.State
             this._timer = new Util.StaticTimer(TimeSpan.FromSeconds(5));
         }
 
-        public override void OnMessage(Message msg)
+        public override void OnMessage(NewsMessage msg)
         {
             if (base.Start)
             {
@@ -38,7 +38,14 @@ namespace NewsApp.Machine.State
                     Trace("Idle...");
                     this._timer.Restart();
 
-                    OnMessage(new Message() { Origin = "example", Content = "ni hao" });
+                    OnMessage(new NewsMessage() { Origin = "example", Content = "ni hao" });
+                    OnMessage(new NewsMessage() { Origin = "这是一个测试", Content = "你好" });
+                    OnMessage(new NewsMessage() { Origin = "这是一个测试", Content = "你好" });
+                    OnMessage(new NewsMessage() { Origin = "这是一个测试", Content = "你好" });
+                    OnMessage(new NewsMessage() { Origin = "这是一个测试", Content = "你好" });
+                    OnMessage(new NewsMessage() { Origin = "这是一个测试", Content = "你好" });
+                    OnMessage(new NewsMessage() { Origin = "这是一个测试", Content = "你好" });
+                    OnMessage(new NewsMessage() { Origin = "这是一个测试", Content = "你好" });
                 }
                 else
                 {

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:NewsApp"
         mc:Ignorable="d"
         Window.Title="MainOverlay" Window.WindowStyle="None" Window.AllowsTransparency="True" Control.Background="{x:Static Brushes.Transparent}" ShowInTaskbar="False" Topmost="True" Deactivated="Window_Deactivated" SourceInitialized="Window_SourceInitialized" Loaded="Window_Loaded"
-        Height="{StaticResource MainOverlayHeight}" >
+        Height="{StaticResource MainOverlayHeight}" Width="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Width}">
     <Window.Resources>
         <Storyboard x:Key="TimeMove">
             <DoubleAnimationUsingKeyFrames BeginTime="0:0:2.5" Storyboard.TargetName="time" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)">
@@ -36,11 +36,13 @@
         </EventTrigger>
     </Window.Triggers>
     <Grid>
-        <Label x:Name="time" FontSize="32" Width="{StaticResource MainOverlayTimeWidth}" FontFamily="Segoe UI" Content="" Panel.ZIndex="5" Height="{StaticResource MainOverlayDisplayHeight}" VerticalAlignment="Top" Opacity="0" HorizontalAlignment="Left">
+        <Label x:Name="time" FontSize="32" Width="{StaticResource MainOverlayTimeWidth}" FontFamily="Segoe UI" Content="" Panel.ZIndex="5" Height="{StaticResource MainOverlayDisplayHeight}" VerticalAlignment="Top" Opacity="0" HorizontalAlignment="Left" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
             <Label.RenderTransform>
                 <TranslateTransform/>
             </Label.RenderTransform>
         </Label>
+        <Canvas x:Name="mars" Width="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Width}" VerticalAlignment="Bottom" MinHeight="{StaticResource MainOverlayDisplayHeight}" Background="Transparent" Panel.ZIndex="3" HorizontalAlignment="Left">
+        </Canvas>
         <Rectangle x:Name="bg" Width="{StaticResource MainOverlayTimeWidth}" VerticalAlignment="Bottom" MinHeight="{StaticResource MainOverlayDisplayHeight}" Fill="Gray" Opacity="0" HorizontalAlignment="Left">
         </Rectangle>
     </Grid>

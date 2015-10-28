@@ -10,6 +10,7 @@ namespace NewsApp.Machine.State
     class NewsBeginState : BaseState
     {
         private bool openOverlay = false;
+        private Util.StaticTimer overlayAnimation;
 
         public NewsBeginState(MachineContext context) : base(context)
         {
@@ -23,7 +24,7 @@ namespace NewsApp.Machine.State
             {
                 base.Context.OpenOverlay();
             }).Delay(TimeSpan.FromSeconds(1))
-            .Subscribe(_ => openOverlay = true);            
+            .Subscribe(_ => openOverlay = true);
         }
 
         public override void OnTimer()
@@ -32,12 +33,15 @@ namespace NewsApp.Machine.State
             {
                 if (openOverlay)
                 {
-                    Trace("!!!");
+                    Trace("Open overlay");
+                    overlayAnimation = new Util.StaticTimer(TimeSpan.FromSeconds(9));
                     openOverlay = false;
                 }
-                else
+                if (overlayAnimation != null && overlayAnimation.IsTimeout())
                 {
-                    Trace("...");
+                    Trace("Ready for marquee...");
+                    base.Context.SetState(new NewsQueueState(base.Context));
+                    base.Context.Start();
                 }
             }
         }

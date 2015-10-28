@@ -10,7 +10,7 @@ namespace NewsApp.Machine
     {
         public NewsMachine()
         {
-            base.RetryCount = 5;
+            base.RetryCount = 12;
             base.RetryTimeout = TimeSpan.FromSeconds(1);
             base.IdleTimer = new Util.StaticTimer(TimeSpan.FromSeconds(5));
         }

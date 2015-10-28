@@ -8,6 +8,8 @@
         <sys:String x:Key="WindowCaption">NewsApp#bajdcc.782195</sys:String>
         <sys:Double x:Key="MainOverlayHeight">200</sys:Double>
         <sys:Double x:Key="MainOverlayDisplayHeight">50</sys:Double>
-        <sys:Double x:Key="MainOverlayTimeWidth">90</sys:Double>
+        <sys:Double x:Key="MainOverlayTimeWidth">100</sys:Double>
+        <sys:Double x:Key="PixelPerSeconds">50</sys:Double>
+        <sys:Double x:Key="MarqueeBlank">50</sys:Double>
     </Application.Resources>
 </Application>

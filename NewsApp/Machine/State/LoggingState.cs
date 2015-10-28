@@ -24,7 +24,7 @@ namespace NewsApp.Machine.State
             this.decoratee.OnCancel();
         }
 
-        public void OnMessage(Message msg)
+        public void OnMessage(NewsMessage msg)
         {
             this.context.Trace(this.GetStateName() + " OnMessage: " +　msg.ToString());
             this.decoratee.OnMessage(msg);

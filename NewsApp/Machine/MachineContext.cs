@@ -18,7 +18,9 @@ namespace NewsApp.Machine
 
         public event LoggingHandler OnLogging;
 
-        protected Queue<Message> queue;
+        public event MarqueeHandler OnMarquee;
+
+        protected Queue<NewsMessage> queue;
 
         private MainOverlay overlay;
 
@@ -26,7 +28,7 @@ namespace NewsApp.Machine
 
         public MachineContext()
         {
-            queue = new Queue<Message>();
+            queue = new Queue<NewsMessage>();
         }        
 
         public void Cancel()
@@ -72,7 +74,7 @@ namespace NewsApp.Machine
             }
         }
 
-        public void AddMessage(Message msg)
+        public void AddMessage(NewsMessage msg)
         {
             queue.Enqueue(msg);
         }
@@ -123,6 +125,7 @@ namespace NewsApp.Machine
 
         public async void OpenOverlay()
         {
+            OnMarquee = null;
             await MainDispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() =>
             {
                 var overlay = new MainOverlay();
@@ -130,9 +133,8 @@ namespace NewsApp.Machine
                 var mainOverlayHeight = (double)App.Current.Resources["MainOverlayHeight"];
                 overlay.Top = SystemParameters.WorkArea.Height - mainOverlayHeight;
                 overlay.Left = SystemParameters.WorkArea.Left;
-                overlay.Height = mainOverlayHeight;
-                overlay.Width = SystemParameters.WorkArea.Width;
                 overlay.Show();
+                OnMarquee += overlay.Marquee;
                 this.overlay = overlay;
             }));
         }
@@ -140,6 +142,15 @@ namespace NewsApp.Machine
         public void CloseOverlay()
         {
             
+        }
+
+        public double Marquee()
+        {
+            if (OnMarquee != null)
+            {
+                return OnMarquee(this, queue.Dequeue());
+            }
+            return 0;
         }
 
         public int RetryCount { get; protected set; }

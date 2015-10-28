@@ -10,10 +10,12 @@ namespace NewsApp.Machine.State
     {
         private int retriesUsed;
         private readonly Util.StaticTimer timer;
+        private readonly Util.StaticTimer queueTime;
 
-        public NewsWaitingState(MachineContext context) : base(context)
+        public NewsWaitingState(MachineContext context, double time) : base(context)
         {
             this.timer = new Util.StaticTimer(context.RetryTimeout);
+            this.queueTime = new Util.StaticTimer(TimeSpan.FromMilliseconds(time));
             this.retriesUsed = 0;
         }
 
@@ -22,20 +24,40 @@ namespace NewsApp.Machine.State
             Trace("Idle...");
         }
 
+        public override void OnMessage(NewsMessage msg)
+        {
+            base.OnMessage(msg);
+            ResetTimeout();
+        }
+
         public override void OnTimer()
         {
-            if (this.timer.IsTimeout())
+            if (queueTime.IsTimeoutOnce())
             {
-                this.timer.Restart();
-                if (this.retriesUsed++ >= base.Context.RetryCount)
+                if (base.Context.HasMessage())
                 {
-                    base.Context.SetState(new NewsEndState(base.Context));
+                    Trace("Ready for queue...");
+                    base.Context.SetState(new NewsQueueState(base.Context));
+                    base.Context.Start();
                 }
                 else
                 {
-                    this.HandleTimeout();
+                    if (this.timer.IsTimeout())
+                    {
+                        this.timer.Restart();
+                        if (this.retriesUsed++ >= base.Context.RetryCount)
+                        {
+                            Trace("No messages available");
+                            base.Context.SetState(new NewsEndState(base.Context));
+                            base.Context.Start();
+                        }
+                        else
+                        {
+                            this.HandleTimeout();
+                        }
+                    }
                 }
-            }
+            }            
         }
 
         protected void ResetTimeout()

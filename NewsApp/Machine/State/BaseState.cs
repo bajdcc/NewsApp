@@ -19,7 +19,7 @@ namespace NewsApp.Machine.State
         {
         }
 
-        public virtual void OnMessage(Message msg)
+        public virtual void OnMessage(NewsMessage msg)
         {
             Trace("Received message: " + msg.ToString());
             Context.AddMessage(msg);

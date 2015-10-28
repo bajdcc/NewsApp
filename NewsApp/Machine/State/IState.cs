@@ -3,7 +3,7 @@
     public interface IState
     {
         void OnCancel();
-        void OnMessage(Message msg);
+        void OnMessage(NewsMessage msg);
         void OnStart();
         void OnStateEnter();
         void OnTimer();
