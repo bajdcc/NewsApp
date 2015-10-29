@@ -11,10 +11,11 @@ namespace NewsApp.Machine.State
     {
         private bool openOverlay = false;
         private Util.StaticTimer overlayAnimation;
+        private Util.StaticTimer waitingForOverlayAnimationCompleted;
 
         public NewsBeginState(MachineContext context) : base(context)
         {
-
+            waitingForOverlayAnimationCompleted = new Util.StaticTimer(TimeSpan.FromSeconds(1));
         }
 
         public override void OnStart()
@@ -33,7 +34,7 @@ namespace NewsApp.Machine.State
             {
                 if (openOverlay)
                 {
-                    Trace("Open overlay");
+                    Trace("[overlay]Created window");
                     overlayAnimation = new Util.StaticTimer(TimeSpan.FromSeconds(9));
                     openOverlay = false;
                 }
@@ -41,6 +42,11 @@ namespace NewsApp.Machine.State
                 {
                     base.Context.SetState(new NewsQueueState(base.Context));
                     base.Context.Start();
+                }
+                else if (waitingForOverlayAnimationCompleted.IsTimeout())
+                {
+                    Trace("[overlay]Waiting for animation completed...");
+                    waitingForOverlayAnimationCompleted.Restart();
                 }
             }
         }

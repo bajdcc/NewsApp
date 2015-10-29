@@ -13,20 +13,11 @@
                 <EasingDoubleKeyFrame KeyTime="0" Value="0" />
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
-        <Storyboard x:Key="ExitAnimation">
-            <DoubleAnimation Storyboard.Target="{Binding ElementName=AppWindow}"
-                             Storyboard.TargetProperty="(Window.Opacity)"
-                             Duration="0:0:2" From="1" To="0"/>
-        </Storyboard>
     </UserControl.Resources>
     <UserControl.Triggers>
         <EventTrigger RoutedEvent="FrameworkElement.Loaded">
             <BeginStoryboard Storyboard="{StaticResource Storyboard1}" />
         </EventTrigger>
-        <EventTrigger RoutedEvent="FrameworkElement.Unloaded">
-            <BeginStoryboard Storyboard="{StaticResource ExitAnimation}" />
-        </EventTrigger>
-
     </UserControl.Triggers>
     <Grid Name="LayoutRoot" Background="Transparent" Height="{StaticResource MainOverlayDisplayHeight}">
         <Grid.RenderTransform>

@@ -37,8 +37,23 @@
                 </DockPanel>
                 <Border>
                     <DockPanel>
-                        <TextBox x:Name="Log" TextWrapping="Wrap" IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" DockPanel.Dock="Top" MinHeight="285" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" FontSize="12" FontFamily="SimSun" MaxHeight="285" IsUndoEnabled="False" MaxLines="500" TextOptions.TextHintingMode="Animated" />
-                        <Label Content="News App © 2015 -- developed by bajdcc" HorizontalAlignment="Center" VerticalAlignment="Bottom" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Bottom" />
+                        <TextBox x:Name="Log" TextWrapping="NoWrap" IsReadOnly="True" VerticalScrollBarVisibility="Auto"
+                                 HorizontalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                 DockPanel.Dock="Top" MinHeight="285" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
+                                 FontSize="12" FontFamily="SimSun" MaxHeight="285" IsUndoEnabled="False" MaxLines="500"
+                                 TextOptions.TextHintingMode="Animated">
+                            <TextBox.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="_Copy" Command="ApplicationCommands.Copy">
+                                    </MenuItem>
+                                    <Separator HorizontalAlignment="Stretch"/>
+                                    <MenuItem Header="_ScrollToEnd" Click="MenuItem_Click_ScrollToEnd" IsCheckable="True" IsChecked="True">
+                                    </MenuItem>
+                                </ContextMenu>
+                            </TextBox.ContextMenu>
+                        </TextBox>
+                        <Label Content="News App © 2015 -- developed by bajdcc" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center" DockPanel.Dock="Bottom"/>
                     </DockPanel>
                 </Border>
             </StackPanel>

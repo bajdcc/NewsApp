@@ -21,7 +21,7 @@ namespace NewsApp.Machine.State
 
         private void HandleTimeout()
         {
-            Trace("Idle...");
+            Trace("[overley]Idle...");
         }
 
         public override void OnMessage(NewsMessage msg)
@@ -36,7 +36,7 @@ namespace NewsApp.Machine.State
             {
                 if (base.Context.HasMessage())
                 {
-                    Trace("Ready for queue...");
+                    Trace("[overley]Ready for queue...");
                     base.Context.SetState(new NewsQueueState(base.Context));
                     base.Context.Start();
                 }
@@ -47,7 +47,7 @@ namespace NewsApp.Machine.State
                         this.timer.Restart();
                         if (this.retriesUsed++ >= base.Context.RetryCount)
                         {
-                            Trace("No messages available");
+                            Trace("[overley]No messages available");
                             base.Context.SetState(new NewsEndState(base.Context));
                             base.Context.Start();
                         }
