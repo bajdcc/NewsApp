@@ -54,18 +54,6 @@ namespace NewsApp
             time.Content = DateTime.Now.ToString("HH:mm");
         }
 
-        public void AnimationClose()
-        {
-            BeginAnimation(UIElement.OpacityProperty,
-                new System.Windows.Media.Animation.DoubleAnimation(1, 0,
-                new Duration(TimeSpan.FromSeconds(1))));
-            Task.Factory.StartNew(() =>
-            {
-                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
-                Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => Close()));
-            });
-        }
-
         public double Marquee(Machine.IMachineContext context, Machine.NewsMessage msg)
         {
             return (double)Dispatcher.Invoke(new Func<double>(() =>

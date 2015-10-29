@@ -4,10 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NewsApp"
+        xmlns:behave="clr-namespace:Presentation.Behaviours"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         Window.Title="MainOverlay" Window.WindowStyle="None" Window.AllowsTransparency="True" Control.Background="{x:Static Brushes.Transparent}" ShowInTaskbar="False" Topmost="True" Deactivated="Window_Deactivated" SourceInitialized="Window_SourceInitialized" Loaded="Window_Loaded"
         Height="{StaticResource MainOverlayHeight}" Width="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Width}">
     <Window.Resources>
+        <Storyboard x:Key="ExitAnimation">
+            <DoubleAnimation Storyboard.Target="{Binding ElementName=AppWindow}"
+                             Storyboard.TargetProperty="(Window.Opacity)"
+                             Duration="0:0:1" From="1" To="0"/>
+        </Storyboard>
         <Storyboard x:Key="TimeMove">
             <DoubleAnimationUsingKeyFrames BeginTime="0:0:2.5" Storyboard.TargetName="time" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)">
                 <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0">
@@ -29,10 +36,13 @@
             <ColorAnimation BeginTime="0:0:5" Duration="0:0:3" Storyboard.TargetName="bg" From="Gray" To="Black" Storyboard.TargetProperty="Fill.(SolidColorBrush.Color)"/>
         </Storyboard>
     </Window.Resources>
+    <i:Interaction.Behaviors>
+        <behave:ClosingBehavior Storyboard="{StaticResource ExitAnimation}"/>
+    </i:Interaction.Behaviors>
     <Window.Triggers>
         <EventTrigger RoutedEvent="Loaded">
-            <BeginStoryboard Storyboard="{Binding Source={StaticResource TimeMove}}"/>
-            <BeginStoryboard Storyboard="{Binding Source={StaticResource TimeFadeIn}}"/>
+            <BeginStoryboard Storyboard="{StaticResource TimeMove}"/>
+            <BeginStoryboard Storyboard="{StaticResource TimeFadeIn}"/>
         </EventTrigger>
     </Window.Triggers>
     <Grid>

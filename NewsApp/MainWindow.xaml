@@ -4,8 +4,30 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NewsApp"
+        xmlns:behave="clr-namespace:Presentation.Behaviours"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
-        x:Name="AppWindow" Title="{StaticResource WindowCaption}" Height="350" Width="525" Visibility="Visible" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" FontSize="16" AllowsTransparency="True" WindowStyle="None" PreviewKeyDown="Window_PreviewKeyDown" ShowInTaskbar="False" BorderThickness="1" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" MouseDown="Window_MouseDown" Closing="AppWindow_Closing">
+        x:Name="AppWindow" Title="{StaticResource WindowCaption}" Opacity="0" Height="350" Width="525" Visibility="Visible" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" FontSize="16" AllowsTransparency="True" WindowStyle="None" PreviewKeyDown="Window_PreviewKeyDown" ShowInTaskbar="False" BorderThickness="1" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" MouseDown="Window_MouseDown" Closing="AppWindow_Closing">
+    <Window.Resources>
+        <Storyboard x:Key="EnterAnimation" BeginTime="0:0:3">
+            <DoubleAnimation Storyboard.Target="{Binding ElementName=AppWindow}"
+                             Storyboard.TargetProperty="(Window.Opacity)"
+                             Duration="0:0:2" From="0" To="1"/>
+        </Storyboard>
+        <Storyboard x:Key="ExitAnimation">
+            <DoubleAnimation Storyboard.Target="{Binding ElementName=AppWindow}"
+                             Storyboard.TargetProperty="(Window.Opacity)"
+                             Duration="0:0:2" From="1" To="0"/>
+        </Storyboard>
+    </Window.Resources>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Loaded">
+            <BeginStoryboard Storyboard="{StaticResource EnterAnimation}"/>
+        </EventTrigger>
+    </Window.Triggers>
+    <i:Interaction.Behaviors>
+        <behave:ClosingBehavior Storyboard="{StaticResource ExitAnimation}"/>
+    </i:Interaction.Behaviors>
     <Grid>
         <Border>      
             <StackPanel>

@@ -16,6 +16,7 @@ namespace NewsApp.Machine.State
         public override void OnStart()
         {
             base.Start = true;
+            Trace("Ready for marquee...");
         }
 
         public override void OnTimer()

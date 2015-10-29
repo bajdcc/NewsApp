@@ -21,7 +21,6 @@ namespace NewsApp
         static Queue<string> _msgQueue = new Queue<string>(100);
         private NewsMachine _newsMachine;
         private NotifyIcon notifyIcon;
-        private bool intendClose = false;
 
         public MainWindow()
         {
@@ -31,23 +30,6 @@ namespace NewsApp
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             _this = this;
-            Observable.Start(() =>
-            {
-                Dispatcher.Invoke(() =>
-                    BeginAnimation(UIElement.OpacityProperty,
-                    new DoubleAnimation(0, 0,
-                    new Duration(TimeSpan.FromSeconds(1)))));
-            }).Delay(TimeSpan.FromSeconds(3))
-            .Subscribe(_ =>
-            {
-                Dispatcher.Invoke(() =>
-                {
-                    BeginAnimation(UIElement.OpacityProperty,
-                    new DoubleAnimation(0, 1,
-                    new Duration(TimeSpan.FromSeconds(2))));
-                    Activate();
-                });
-            });
 
             notifyIcon = new NotifyIcon();
             notifyIcon.BalloonTipText = "程序开始运行";
@@ -88,19 +70,8 @@ namespace NewsApp
 
         private void AnimateClose()
         {
-            if (!intendClose)
-                intendClose = true;
-            else
-                return;
             InternClose();
-            BeginAnimation(UIElement.OpacityProperty,
-                new DoubleAnimation(1, 0,
-                new Duration(TimeSpan.FromSeconds(2))));
-            Task.Factory.StartNew(() =>
-            {
-                Thread.Sleep(TimeSpan.FromSeconds(2));
-                Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => Close()));
-            });
+            Close();            
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -139,11 +110,6 @@ namespace NewsApp
 
         private void AppWindow_Closing(object sender, CancelEventArgs e)
         {
-            if (!intendClose)
-                intendClose = true;
-            else
-                return;
-
             InternClose();
         }
     }

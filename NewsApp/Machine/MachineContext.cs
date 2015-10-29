@@ -36,7 +36,7 @@ namespace NewsApp.Machine
             Dispose();
             if (overlay != null)
             {
-                overlay.AnimationClose();
+                overlay.Close();
                 overlay = null;
             }
         }

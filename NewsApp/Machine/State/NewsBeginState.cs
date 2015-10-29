@@ -39,7 +39,6 @@ namespace NewsApp.Machine.State
                 }
                 if (overlayAnimation != null && overlayAnimation.IsTimeout())
                 {
-                    Trace("Ready for marquee...");
                     base.Context.SetState(new NewsQueueState(base.Context));
                     base.Context.Start();
                 }
