@@ -12,7 +12,7 @@ namespace NewsApp.Machine
         {
             base.RetryCount = 12;
             base.RetryTimeout = TimeSpan.FromSeconds(1);
-            base.IdleTimer = new Util.StaticTimer(TimeSpan.FromSeconds(5));
+            base.IdleTimer = new Util.StaticTimer(TimeSpan.FromMinutes(15));
         }
 
         public new void Start()

@@ -33,7 +33,11 @@ namespace Presentation.Behaviours
             }
             e.Cancel = true;
             AssociatedObject.Closing -= onWindowClosing;
+            beginStoryBoard();
+        }
 
+        protected virtual void beginStoryBoard()
+        {
             Storyboard.Completed += (o, a) => AssociatedObject.Close();
             Storyboard.Begin(AssociatedObject);
         }

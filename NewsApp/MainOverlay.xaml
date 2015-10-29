@@ -6,14 +6,20 @@
         xmlns:local="clr-namespace:NewsApp"
         xmlns:behave="clr-namespace:Presentation.Behaviours"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Window.Title="MainOverlay" Window.WindowStyle="None" Window.AllowsTransparency="True" Control.Background="{x:Static Brushes.Transparent}" ShowInTaskbar="False" Topmost="True" Deactivated="Window_Deactivated" SourceInitialized="Window_SourceInitialized" Loaded="Window_Loaded"
         Height="{StaticResource MainOverlayHeight}" Width="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Width}">
     <Window.Resources>
+        <sys:Boolean x:Key="UseBackupAnimation">false</sys:Boolean>
         <Storyboard x:Key="ExitAnimation">
             <DoubleAnimation Storyboard.Target="{Binding ElementName=AppWindow}"
                              Storyboard.TargetProperty="(Window.Opacity)"
                              Duration="0:0:1" From="1" To="0"/>
+        </Storyboard>
+        <Storyboard x:Key="BackupExitAnimation">
+            <DoubleAnimation BeginTime="0:0:1" Duration="0:0:4" Storyboard.TargetName="bg" From="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Width}" To="0" Storyboard.TargetProperty="Width"/>
+            <DoubleAnimation BeginTime="0:0:5" Duration="0:0:2" Storyboard.TargetName="time" From="1.0" To="0.0" Storyboard.TargetProperty="Opacity"/>
         </Storyboard>
         <Storyboard x:Key="TimeMove">
             <DoubleAnimationUsingKeyFrames BeginTime="0:0:2.5" Storyboard.TargetName="time" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)">
@@ -37,7 +43,8 @@
         </Storyboard>
     </Window.Resources>
     <i:Interaction.Behaviors>
-        <behave:ClosingBehavior Storyboard="{StaticResource ExitAnimation}"/>
+        <behave:MultiClosingBehavior Storyboard="{StaticResource ExitAnimation}" BackupStoryboard="{StaticResource BackupExitAnimation}"
+                                     UseBackup="{DynamicResource UseBackupAnimation}"/>
     </i:Interaction.Behaviors>
     <Window.Triggers>
         <EventTrigger RoutedEvent="Loaded">

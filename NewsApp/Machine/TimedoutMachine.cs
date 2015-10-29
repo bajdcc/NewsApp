@@ -36,6 +36,8 @@ namespace NewsApp.Machine
             if (this.timer != null)
             {
                 base.state.OnTimer();
+                base.stateTransfer.OnTimer();
+                base.stateCrawler.OnTimer();
             }
         }
     }

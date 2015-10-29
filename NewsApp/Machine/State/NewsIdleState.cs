@@ -8,7 +8,7 @@ namespace NewsApp.Machine.State
 {
     class NewsIdleState : BaseState
     {
-        Util.StaticTimer _timer;
+        private Util.StaticTimer _timer;
 
         public NewsIdleState(MachineContext context) : base(context)
         {
@@ -37,16 +37,9 @@ namespace NewsApp.Machine.State
                 {
                     Trace("Idle...");
                     this._timer.Restart();
-
-                    OnMessage(new NewsMessage() { Origin = "example", Content = "ni hao...................................." });
-                    OnMessage(new NewsMessage() { Origin = "这是一个测试", Content = "你好" });
-                }
-                else
-                {
-
                 }
 
-                if (base.Context.IdleTimer.IsTimeout())
+                if (base.Context.IdleTimer.IsTimeoutOnce())
                 {
                     if (base.Context.HasMessage())
                     {

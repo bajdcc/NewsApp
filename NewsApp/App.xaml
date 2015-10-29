@@ -11,5 +11,10 @@
         <sys:Double x:Key="MainOverlayTimeWidth">100</sys:Double>
         <sys:Double x:Key="PixelPerSeconds">50</sys:Double>
         <sys:Double x:Key="MarqueeBlank">50</sys:Double>
+        <ResourceDictionary x:Key="RssFeed" >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="RssFeed.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

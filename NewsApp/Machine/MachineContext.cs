@@ -10,6 +10,10 @@ namespace NewsApp.Machine
     {
         protected IState state;
 
+        protected IState stateTransfer;
+
+        protected IState stateCrawler;
+
         public event ErrorHandler OnError;
 
         public event FinishedHandler OnFinished;
@@ -98,6 +102,16 @@ namespace NewsApp.Machine
         public void Start()
         {
             this.state.OnStart();
+            if (this.stateTransfer == null)
+            {
+                this.stateTransfer = new NewsTransferState(this, this.state);
+                this.stateTransfer.OnStart();
+            }
+            if (this.stateCrawler == null)
+            {
+                this.stateCrawler = new NewsCrawlerState(this, this.stateTransfer);
+                this.stateCrawler.OnStart();
+            }
         }
 
         public void Log(string msg)
@@ -139,9 +153,16 @@ namespace NewsApp.Machine
             }));
         }
 
-        public void CloseOverlay()
+        public async void CloseOverlay()
         {
-            
+            var overlay = this.overlay;
+            this.overlay = null;
+            await MainDispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() =>
+            {
+                overlay.Resources["UseBackupAnimation"] = true;
+                overlay.Close();
+                overlay = null;
+            }));
         }
 
         public double Marquee()

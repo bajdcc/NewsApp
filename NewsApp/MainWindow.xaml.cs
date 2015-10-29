@@ -33,16 +33,24 @@ namespace NewsApp
 
             notifyIcon = new System.Windows.Forms.NotifyIcon();
             notifyIcon.BalloonTipText = "程序开始运行";
-            notifyIcon.Text = "托盘图标";
+            notifyIcon.BalloonTipTitle = "NewsApp";
+            notifyIcon.Text = "NewsApp Tray";
             notifyIcon.Icon = System.Drawing.SystemIcons.WinLogo;
             notifyIcon.Visible = true;
             notifyIcon.ShowBalloonTip(1000);
             notifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(notifyIcon_MouseClick);
-
-            var aboutMenu = new System.Windows.Forms.MenuItem("About", (obj, args) => System.Windows.MessageBox.Show(this, "NewsApp by bajdcc", "NewsApp"));
-            var exitMenu = new System.Windows.Forms.MenuItem("Exit", (obj, args) => AnimateClose());
-
-            notifyIcon.ContextMenu = new System.Windows.Forms.ContextMenu(new System.Windows.Forms.MenuItem[] { aboutMenu, exitMenu });
+            notifyIcon.ContextMenu = new System.Windows.Forms.ContextMenu(new System.Windows.Forms.MenuItem[]
+            {
+                new System.Windows.Forms.MenuItem("关于", (obj, args) =>
+                    System.Windows.MessageBox.Show(this, "NewsApp by bajdcc", "NewsApp")),
+                new System.Windows.Forms.MenuItem("-"),
+                new System.Windows.Forms.MenuItem("显示", (obj, args) =>
+                    Show()),
+                new System.Windows.Forms.MenuItem("隐藏", (obj, args) =>
+                    Hide()),
+                new System.Windows.Forms.MenuItem("退出", (obj, args) =>
+                    AnimateClose())
+            });
 
             _newsMachine = new NewsMachine();
             _newsMachine.OnLogging += TraceOutput;            

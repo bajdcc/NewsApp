@@ -1,0 +1,39 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:NewsApp"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <x:Array x:Key="Rss" Type="local:RssModel">
+        <local:RssModel Description="国内焦点" RssUrl="http://news.baidu.com/n?cmd=1&amp;class=civilnews&amp;tn=rss"/>
+        <local:RssModel Description="国际焦点" RssUrl="http://news.baidu.com/n?cmd=1&amp;class=internews&amp;tn=rss"/>
+        <local:RssModel Description="军事焦点" RssUrl="http://news.baidu.com/n?cmd=1&amp;class=mil&amp;tn=rss"/>
+        <local:RssModel Description="财经焦点" RssUrl="http://news.baidu.com/n?cmd=1&amp;class=finannews&amp;tn=rss"/>
+        <local:RssModel Description="互联网焦点" RssUrl="http://news.baidu.com/n?cmd=1&amp;class=internet&amp;tn=rss"/>
+        <local:RssModel Description="房产焦点" RssUrl="http://news.baidu.com/n?cmd=1&amp;class=housenews&amp;tn=rss"/>
+        <local:RssModel Description="汽车焦点" RssUrl="http://news.baidu.com/n?cmd=1&amp;class=autonews&amp;tn=rss"/>
+        <local:RssModel Description="体育焦点" RssUrl="http://news.baidu.com/n?cmd=1&amp;class=sportnews&amp;tn=rss"/>
+        <local:RssModel Description="娱乐焦点" RssUrl="http://news.baidu.com/n?cmd=1&amp;class=enternews&amp;tn=rss"/>
+        <local:RssModel Description="游戏焦点" RssUrl="http://news.baidu.com/n?cmd=1&amp;class=gamenews&amp;tn=rss"/>
+        <local:RssModel Description="教育焦点" RssUrl="http://news.baidu.com/n?cmd=1&amp;class=edunews&amp;tn=rss"/>
+        <local:RssModel Description="女人焦点" RssUrl="http://news.baidu.com/n?cmd=1&amp;class=healthnews&amp;tn=rss"/>
+        <local:RssModel Description="科技焦点" RssUrl="http://news.baidu.com/n?cmd=1&amp;class=technnews&amp;tn=rss"/>
+        <local:RssModel Description="社会焦点" RssUrl="http://news.baidu.com/n?cmd=1&amp;class=socianews&amp;tn=rss"/>
+        <local:RssModel Description="社会与法焦点" RssUrl="http://news.baidu.com/n?cmd=1&amp;class=shyf&amp;tn=rss"/>
+        <local:RssModel Description="社会万象焦点" RssUrl="http://news.baidu.com/n?cmd=1&amp;class=shwx&amp;tn=rss"/>
+        <local:RssModel Description="真情时刻焦点" RssUrl="http://news.baidu.com/n?cmd=1&amp;class=zqsk&amp;tn=rss"/>
+        <local:RssModel Description="奇闻异事焦点" RssUrl="http://news.baidu.com/n?cmd=1&amp;class=qwys&amp;tn=rss"/>
+        <local:RssModel Description="国内最新" RssUrl="http://news.baidu.com/n?cmd=4&amp;class=civilnews&amp;tn=rss"/>
+        <local:RssModel Description="国际最新" RssUrl="http://news.baidu.com/n?cmd=4&amp;class=internews&amp;tn=rss"/>
+        <local:RssModel Description="军事最新" RssUrl="http://news.baidu.com/n?cmd=4&amp;class=mil&amp;tn=rss"/>
+        <local:RssModel Description="财经最新" RssUrl="http://news.baidu.com/n?cmd=4&amp;class=finannews&amp;tn=rss"/>
+        <local:RssModel Description="互联网最新" RssUrl="http://news.baidu.com/n?cmd=4&amp;class=internet&amp;tn=rss"/>
+        <local:RssModel Description="房产最新" RssUrl="http://news.baidu.com/n?cmd=4&amp;class=housenews&amp;tn=rss"/>
+        <local:RssModel Description="汽车最新" RssUrl="http://news.baidu.com/n?cmd=4&amp;class=autonews&amp;tn=rss"/>
+        <local:RssModel Description="体育最新" RssUrl="http://news.baidu.com/n?cmd=4&amp;class=sportnews&amp;tn=rss"/>
+        <local:RssModel Description="娱乐最新" RssUrl="http://news.baidu.com/n?cmd=4&amp;class=enternews&amp;tn=rss"/>
+        <local:RssModel Description="游戏最新" RssUrl="http://news.baidu.com/n?cmd=4&amp;class=gamenews&amp;tn=rss"/>
+        <local:RssModel Description="教育最新" RssUrl="http://news.baidu.com/n?cmd=4&amp;class=edunews&amp;tn=rss"/>
+        <local:RssModel Description="女人最新" RssUrl="http://news.baidu.com/n?cmd=4&amp;class=healthnews&amp;tn=rss"/>
+        <local:RssModel Description="科技最新" RssUrl="http://news.baidu.com/n?cmd=4&amp;class=technnews&amp;tn=rss"/>
+        <local:RssModel Description="社会最新" RssUrl="http://news.baidu.com/n?cmd=4&amp;class=socianews&amp;tn=rss"/>
+    </x:Array>
+</ResourceDictionary>

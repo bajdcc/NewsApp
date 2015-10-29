@@ -34,7 +34,7 @@ namespace NewsApp.Machine.State
             {
                 if (openOverlay)
                 {
-                    Trace("[overlay]Created window");
+                    Trace("[Overlay] Created window");
                     overlayAnimation = new Util.StaticTimer(TimeSpan.FromSeconds(9));
                     openOverlay = false;
                 }
@@ -45,7 +45,7 @@ namespace NewsApp.Machine.State
                 }
                 else if (waitingForOverlayAnimationCompleted.IsTimeout())
                 {
-                    Trace("[overlay]Waiting for animation completed...");
+                    Trace("[Overlay] Waiting for animation completed...");
                     waitingForOverlayAnimationCompleted.Restart();
                 }
             }

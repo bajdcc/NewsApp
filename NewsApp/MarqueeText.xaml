@@ -23,7 +23,7 @@
         <Grid.RenderTransform>
             <TranslateTransform/>
         </Grid.RenderTransform>
-        <RichTextBox Name="TextBox" FontSize="24" FontWeight="Bold" BorderThickness="0" Foreground="White" Background="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <RichTextBox Name="TextBox" FontSize="32" FontWeight="Bold" BorderThickness="0" Foreground="White" Background="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center">
             <FlowDocument>
                 <Paragraph>
                     <Run Foreground="LightBlue">【</Run>
