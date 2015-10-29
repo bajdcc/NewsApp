@@ -9,7 +9,7 @@
         <sys:Double x:Key="MainOverlayHeight">200</sys:Double>
         <sys:Double x:Key="MainOverlayDisplayHeight">50</sys:Double>
         <sys:Double x:Key="MainOverlayTimeWidth">100</sys:Double>
-        <sys:Double x:Key="PixelPerSeconds">50</sys:Double>
+        <sys:Double x:Key="PixelPerSeconds">60</sys:Double>
         <sys:Double x:Key="MarqueeBlank">50</sys:Double>
         <ResourceDictionary x:Key="RssFeed" >
             <ResourceDictionary.MergedDictionaries>

@@ -34,6 +34,11 @@ namespace NewsApp.Machine.State
             rss_feed_list = models.ToList();
         }
 
+        public override void OnReset()
+        {
+            _timer.SetMinValue();
+        }
+
         public override void OnStart()
         {
             base.Start = true;
@@ -53,11 +58,8 @@ namespace NewsApp.Machine.State
             if (base.Start && this._timer.IsTimeoutOnce())
             {
                 this._timer.Restart();
-                if (!base.Context.HasMessage())
-                {
-                    Trace("[Crawler] Working...");
-                    OnCrawl();
-                }
+                Trace("[Crawler] Working...");
+                OnCrawl();
             }
         }
 

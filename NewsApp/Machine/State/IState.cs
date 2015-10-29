@@ -4,6 +4,7 @@
     {
         void OnCancel();
         void OnMessage(NewsMessage msg);
+        void OnReset();
         void OnStart();
         void OnStateEnter();
         void OnTimer();

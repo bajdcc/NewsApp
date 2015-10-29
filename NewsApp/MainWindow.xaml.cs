@@ -16,8 +16,10 @@ namespace NewsApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const int MAX_LOG_LINES = 30;
+
         static MainWindow _this;
-        static Queue<string> _msgQueue = new Queue<string>(100);
+        static Queue<string> _msgQueue = new Queue<string>();
         private NewsMachine _newsMachine;
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private bool scrollToEnd = true;
@@ -44,10 +46,34 @@ namespace NewsApp
                 new System.Windows.Forms.MenuItem("关于", (obj, args) =>
                     System.Windows.MessageBox.Show(this, "NewsApp by bajdcc", "NewsApp")),
                 new System.Windows.Forms.MenuItem("-"),
-                new System.Windows.Forms.MenuItem("显示", (obj, args) =>
+                new System.Windows.Forms.MenuItem("显示主界面", (obj, args) =>
                     Show()),
-                new System.Windows.Forms.MenuItem("隐藏", (obj, args) =>
+                new System.Windows.Forms.MenuItem("隐藏主界面", (obj, args) =>
                     Hide()),
+                new System.Windows.Forms.MenuItem("-"),
+                new System.Windows.Forms.MenuItem("显示新闻", (obj, args) =>
+                    {
+                        if (_newsMachine != null && _newsMachine.Overlay != null)
+                        {
+                            _newsMachine.Overlay.Show();
+                        }
+                    }),
+                new System.Windows.Forms.MenuItem("隐藏新闻", (obj, args) =>
+                    {
+                        if (_newsMachine != null && _newsMachine.Overlay != null)
+                        {
+                            _newsMachine.Overlay.Hide();
+                        }
+                    }),
+                new System.Windows.Forms.MenuItem("-"),
+                new System.Windows.Forms.MenuItem("手动刷新", (obj, args) =>
+                    {
+                        if (_newsMachine != null)
+                        {
+                            _newsMachine.Reset();
+                        }
+                    }),
+                new System.Windows.Forms.MenuItem("-"),
                 new System.Windows.Forms.MenuItem("退出", (obj, args) =>
                     AnimateClose())
             });
@@ -96,6 +122,8 @@ namespace NewsApp
         static public void TraceOutput(IMachineContext context, string msg)
         {
             _msgQueue.Enqueue(msg);
+            if (_msgQueue.Count > MAX_LOG_LINES)
+                _msgQueue.Dequeue();
             if (_this != null)
             {
                 _this.InternTraceOutput(msg);
@@ -107,7 +135,7 @@ namespace NewsApp
             var text = string.Join("\n", _msgQueue);
             Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() =>
             {
-                this.Log.Text = string.Join("\n", text);
+                this.Log.Text = text;
                 this.Log.CaretIndex = this.Log.Text.Length;
                 if (scrollToEnd)
                 {
@@ -136,6 +164,11 @@ namespace NewsApp
         {
             System.Windows.Controls.MenuItem item = sender as System.Windows.Controls.MenuItem;
             scrollToEnd = item.IsChecked;
+        }
+
+        private void MenuItem_Click_Clear(object sender, RoutedEventArgs e)
+        {
+            Log.Text = string.Empty;
         }
     }
 }

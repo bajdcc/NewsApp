@@ -25,13 +25,16 @@ namespace NewsApp.Machine.State
             Context.AddMessage(msg);
         }
 
+        public virtual void OnReset()
+        {            
+        }
+
         public virtual void OnStart()
         {
         }
 
         public virtual void OnStateEnter()
         {
-
         }
 
         public virtual void OnTimer()

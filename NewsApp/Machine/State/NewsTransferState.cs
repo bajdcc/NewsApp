@@ -8,7 +8,7 @@ namespace NewsApp.Machine.State
 {
     class NewsTransferState : BaseState
     {
-        private const int MAX_CONTENT_LENGTH = 200;
+        private const int MAX_CONTENT_LENGTH = 100;
         private IState prev;
         private Util.StaticTimer _timer;
         private Queue<NewsMessage> queueMsg;
@@ -17,7 +17,7 @@ namespace NewsApp.Machine.State
         {
             this.prev = prev;
             this._timer = new Util.StaticTimer(TimeSpan.FromSeconds(8));
-            this.queueMsg = new Queue<NewsMessage>(500);
+            this.queueMsg = new Queue<NewsMessage>();
         }
 
         public override void OnStart()
@@ -33,12 +33,16 @@ namespace NewsApp.Machine.State
             queueMsg.Enqueue(msg);
         }
 
+        public override void OnReset()
+        {
+            _timer.SetMinValue();
+        }
+
         public override void OnTimer()
         {
             if (base.Start && this._timer.IsTimeoutOnce())
             {
                 this._timer.Restart();
-                Trace("[Transfer] Working...");
                 OnTransfer();
             }
         }

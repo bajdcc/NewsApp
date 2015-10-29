@@ -46,6 +46,8 @@
                                 <ContextMenu>
                                     <MenuItem Header="_Copy" Command="ApplicationCommands.Copy">
                                     </MenuItem>
+                                    <MenuItem Header="_Clear" Click="MenuItem_Click_Clear" >
+                                    </MenuItem>
                                     <Separator HorizontalAlignment="Stretch"/>
                                     <MenuItem Header="_ScrollToEnd" Click="MenuItem_Click_ScrollToEnd" IsCheckable="True" IsChecked="True">
                                     </MenuItem>

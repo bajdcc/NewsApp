@@ -18,7 +18,7 @@ namespace NewsApp.Machine.State
         public override void OnStart()
         {
             base.Start = true;
-            this._timer = new Util.StaticTimer(TimeSpan.FromSeconds(5));
+            this._timer = new Util.StaticTimer(TimeSpan.FromMinutes(1));
         }
 
         public override void OnMessage(NewsMessage msg)

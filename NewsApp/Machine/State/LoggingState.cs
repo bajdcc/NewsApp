@@ -26,8 +26,14 @@ namespace NewsApp.Machine.State
 
         public void OnMessage(NewsMessage msg)
         {
-            this.context.Trace(this.GetStateName() + " OnMessage: " +　msg.ToString());
+            this.context.Trace(this.GetStateName() + " OnMessage");
             this.decoratee.OnMessage(msg);
+        }
+
+        public void OnReset()
+        {
+            this.context.Trace(this.GetStateName() + " OnReset");
+            this.decoratee.OnReset();
         }
 
         public void OnStart()
