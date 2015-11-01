@@ -58,8 +58,11 @@ namespace NewsApp.Machine.State
             if (base.Start && this._timer.IsTimeoutOnce())
             {
                 this._timer.Restart();
-                Trace("[Crawler] Working...");
-                OnCrawl();
+                if (!base.Context.HasMessage())
+                {
+                    Trace("[Crawler] Working...");
+                    OnCrawl();
+                }
             }
         }
 
@@ -77,11 +80,12 @@ namespace NewsApp.Machine.State
                 reader.Close();
                 foreach (var item in feed.Items)
                 {
-                    var title = item.Title.Text;
                     prev.OnMessage(new NewsMessage()
                     {
                         Origin = model.Description,
-                        Content = title
+                        Content = item.Title.Text,
+                        Uri = item.Links.FirstOrDefault().Uri,
+                        Time = item.PublishDate.DateTime
                     });
                 }
             }

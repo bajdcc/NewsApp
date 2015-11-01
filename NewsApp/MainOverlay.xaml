@@ -18,6 +18,7 @@
                              Duration="0:0:1" From="1" To="0"/>
         </Storyboard>
         <Storyboard x:Key="BackupExitAnimation">
+            <DoubleAnimation BeginTime="0:0:0.5" Duration="0:0:1.5" Storyboard.TargetName="mars" From="1.0" To="0.0" Storyboard.TargetProperty="Opacity"/>
             <DoubleAnimation BeginTime="0:0:1" Duration="0:0:4" Storyboard.TargetName="bg" From="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Width}" To="0" Storyboard.TargetProperty="Width"/>
             <DoubleAnimation BeginTime="0:0:5" Duration="0:0:2" Storyboard.TargetName="time" From="1.0" To="0.0" Storyboard.TargetProperty="Opacity"/>
         </Storyboard>

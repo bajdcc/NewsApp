@@ -16,12 +16,16 @@ namespace NewsApp.Machine.State
             _timer = new Util.StaticTimer(TimeSpan.FromSeconds(1));
         }
 
+        public override void OnCancel(bool shutdown)
+        {
+        }
+
         public override void OnStart()
         {
             base.Start = true;
             this.waitingForOverlayAnimationCompleted = new Util.StaticTimer(TimeSpan.FromSeconds(10));
             Trace("[Overlay] Waiting for close...");
-            base.Context.CloseOverlay();
+            base.Context.CloseOverlay(false);
         }
 
         public override void OnTimer()

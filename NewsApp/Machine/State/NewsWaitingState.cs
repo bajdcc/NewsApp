@@ -21,7 +21,7 @@ namespace NewsApp.Machine.State
 
         private void HandleTimeout()
         {
-            Trace("[overley] Idle...");
+            Trace("[Overley] Idle...");
         }
 
         public override void OnMessage(NewsMessage msg)

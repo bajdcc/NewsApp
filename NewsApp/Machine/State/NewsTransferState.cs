@@ -36,6 +36,7 @@ namespace NewsApp.Machine.State
         public override void OnReset()
         {
             _timer.SetMinValue();
+            queueMsg.Clear();
         }
 
         public override void OnTimer()
@@ -51,7 +52,7 @@ namespace NewsApp.Machine.State
         {
             if (prev != null && queueMsg.Count > 0)
             {
-                Trace("[Transfer] Moved one message");
+                Trace("[Transfer] Moved one message, rest: " + queueMsg.Count);
                 prev.OnMessage(queueMsg.Dequeue());
             }
         }

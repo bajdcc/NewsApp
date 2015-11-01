@@ -15,8 +15,19 @@ namespace NewsApp.Machine.State
             this.Context = context;
         }
 
-        public virtual void OnCancel()
+        public virtual void OnCancel(bool shutdown)
         {
+            if (shutdown)
+            {
+                this.Context.CloseOverlay(true);
+                this.Context.SetState(new NewsIdleState(this.Context));
+                this.Context.Start();
+            }
+            else
+            {
+                this.Context.SetState(new NewsEndState(this.Context));
+                this.Context.Start();
+            }
         }
 
         public virtual void OnMessage(NewsMessage msg)

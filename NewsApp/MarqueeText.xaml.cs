@@ -48,6 +48,7 @@ namespace NewsApp
                 var length = 60 + Util.UIHelper.MeasureTextWidth("【】" + msg.Content + msg.Origin, TextBox.FontSize, TextBox.FontFamily.Source, TextBox.FontWeight);
                 OriginText.Text = msg.Origin;
                 ContentText.Text = msg.Content;
+                ContentLink.NavigateUri = msg.Uri;
                 var blank = (double)App.Current.Resources["MarqueeBlank"];
                 var pps = (double)App.Current.Resources["PixelPerSeconds"];
                 var storyboard = base.Resources["Storyboard1"] as Storyboard;
@@ -69,6 +70,13 @@ namespace NewsApp
                 var canvas = Parent as Canvas;
                 canvas.Children.Remove(this);
             }
+        }
+
+        private void ContentLink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            System.Diagnostics.Process.Start(
+                new System.Diagnostics.ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
         }
     }
 }

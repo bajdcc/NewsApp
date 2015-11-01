@@ -2,7 +2,7 @@
 {
     public interface IState
     {
-        void OnCancel();
+        void OnCancel(bool shutdown);
         void OnMessage(NewsMessage msg);
         void OnReset();
         void OnStart();

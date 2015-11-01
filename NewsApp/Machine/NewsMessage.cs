@@ -11,8 +11,8 @@ namespace NewsApp.Machine
         public bool Empty { get; set; }
         public string Origin { get; set; }
         public string Content { get; set; }
-
         public DateTime Time { get; set; }
+        public Uri Uri { get; set; }
 
         public override string ToString()
         {

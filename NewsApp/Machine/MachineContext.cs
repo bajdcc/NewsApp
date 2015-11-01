@@ -32,24 +32,19 @@ namespace NewsApp.Machine
 
         public MachineContext()
         {
-            queue = new Queue<NewsMessage>();
+            this.queue = new Queue<NewsMessage>();
         }        
 
-        public void Cancel()
+        public void Cancel(bool shutdown)
         {
-            Dispose();
-            if (overlay != null)
-            {
-                overlay.Close();
-                overlay = null;
-            }
+            this.state.OnCancel(shutdown);
         }
 
         protected virtual IState DecorateForLogging(IState state)
         {
             if (!Util.TraceHelper.Enabled)
             {
-                return state;
+                return this.state;
             }
             return new LoggingState(state, this);
         }
@@ -80,7 +75,7 @@ namespace NewsApp.Machine
 
         public void AddMessage(NewsMessage msg)
         {
-            queue.Enqueue(msg);
+            this.queue.Enqueue(msg);
         }
 
         public bool HasMessage()
@@ -153,13 +148,15 @@ namespace NewsApp.Machine
             }));
         }
 
-        public async void CloseOverlay()
+        public async void CloseOverlay(bool shutdown)
         {
+            if (this.overlay == null)
+                return;
             var overlay = this.overlay;
             this.overlay = null;
             await MainDispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() =>
             {
-                overlay.Resources["UseBackupAnimation"] = true;
+                overlay.Resources["UseBackupAnimation"] = !shutdown;
                 overlay.Close();
                 overlay = null;
             }));

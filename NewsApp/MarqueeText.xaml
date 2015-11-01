@@ -13,6 +13,20 @@
                 <EasingDoubleKeyFrame KeyTime="0" Value="0" />
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
+        <Style x:Key="HyperlinkStyle" TargetType="{x:Type Hyperlink}">
+            <Setter Property="TextBlock.TextDecorations" Value="{x:Null}"/>
+            <Style.Triggers>
+                <Trigger Property="Control.IsMouseOver" Value="True">
+                    <Setter Property="TextBlock.TextDecorations">
+                        <Setter.Value>
+                            <TextDecorationCollection>
+                                <TextDecoration Location="Underline"/>
+                            </TextDecorationCollection>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>        
     </UserControl.Resources>
     <UserControl.Triggers>
         <EventTrigger RoutedEvent="FrameworkElement.Loaded">
@@ -23,13 +37,15 @@
         <Grid.RenderTransform>
             <TranslateTransform/>
         </Grid.RenderTransform>
-        <RichTextBox Name="TextBox" FontSize="32" FontWeight="Bold" BorderThickness="0" Foreground="White" Background="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <RichTextBox Name="TextBox" IsReadOnly="True" FontSize="32" FontWeight="Bold" BorderThickness="0" Foreground="White" Background="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center" IsDocumentEnabled="True">
             <FlowDocument>
                 <Paragraph>
                     <Run Foreground="LightBlue">【</Run>
                     <Run Name="OriginText" Foreground="LightBlue">Origin</Run>
                     <Run Foreground="LightBlue">】</Run>
-                    <Run Name="ContentText" Foreground="White">Content</Run>
+                    <Hyperlink Cursor="Hand" Name="ContentLink" Foreground="White" Style="{DynamicResource HyperlinkStyle}" RequestNavigate="ContentLink_RequestNavigate">
+                        <Run Name="ContentText">Content</Run>
+                    </Hyperlink>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>

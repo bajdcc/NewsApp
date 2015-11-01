@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
@@ -21,6 +22,8 @@ namespace NewsApp
     /// </summary>
     public partial class MainOverlay : Window
     {
+        public NewsSettings Settings { get; set; }
+
         DispatcherTimer timer;
 
         public MainOverlay()
@@ -38,13 +41,19 @@ namespace NewsApp
 
         private void Window_SourceInitialized(object sender, EventArgs e)
         {
-            IntPtr hwnd = new System.Windows.Interop.WindowInteropHelper(this).Handle;
-            uint windowLong = Util.AppHelper.GetWindowLong(hwnd, -20);
-            Util.AppHelper.SetWindowLong(hwnd, -20, windowLong | 0x20);
+            if (NewsMachine.Settings.TransparentWindow)
+            {
+                IntPtr hwnd = new System.Windows.Interop.WindowInteropHelper(this).Handle;
+                uint windowLong = Util.AppHelper.GetWindowLong(hwnd, -20);
+                Util.AppHelper.SetWindowLong(hwnd, -20, windowLong | 0x20);
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            var storyboard = base.Resources["TimeFadeIn"] as Storyboard;
+            (storyboard.Children[6] as ColorAnimation).To = NewsMachine.Settings.TransparentBackground ?
+                Colors.Transparent : Colors.Black;
             timer = new DispatcherTimer(TimeSpan.FromSeconds(1), DispatcherPriority.Normal, Timer_Tick, Dispatcher);
             timer.Start();
         }
@@ -59,6 +68,11 @@ namespace NewsApp
             return (double)Dispatcher.Invoke(new Func<double>(() =>
             {
                 var marTextCtrl = new MarqueeText(msg);
+                if (NewsMachine.Settings.TransparentBackground)
+                {
+                    marTextCtrl.OriginText.Foreground = Brushes.Blue;
+                    marTextCtrl.ContentLink.Foreground = Brushes.Black;
+                }
                 mars.Children.Add(marTextCtrl);
                 return marTextCtrl.Time;
             }));

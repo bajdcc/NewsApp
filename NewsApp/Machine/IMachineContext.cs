@@ -39,7 +39,7 @@ namespace NewsApp.Machine
 
         void OpenOverlay();
 
-        void CloseOverlay();
+        void CloseOverlay(bool shutdown);
 
         double Marquee();
 

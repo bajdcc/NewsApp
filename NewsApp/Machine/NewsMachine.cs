@@ -8,6 +8,8 @@ namespace NewsApp.Machine
 {
     class NewsMachine : TimedoutMachine
     {
+        static public NewsSettings Settings { get; set; } = new NewsSettings();
+
         public NewsMachine()
         {
             base.RetryCount = 12;
@@ -19,6 +21,12 @@ namespace NewsApp.Machine
         {
             base.SetState(new State.NewsIdleState(this));
             base.Start();
+        }
+
+        public new void Cancel(bool shutdown)
+        {
+            base.Cancel(shutdown);
+            IdleTimer.SetMinValue();
         }
 
         public void Reset()

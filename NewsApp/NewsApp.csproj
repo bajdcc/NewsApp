@@ -99,6 +99,7 @@
     </ApplicationDefinition>
     <Compile Include="Machine\IMachineContext.cs" />
     <Compile Include="Machine\NewsMachine.cs" />
+    <Compile Include="Machine\NewsSettings.cs" />
     <Compile Include="Machine\State\LoggingState.cs" />
     <Compile Include="Machine\NewsMessage.cs" />
     <Compile Include="Machine\State\BaseState.cs" />

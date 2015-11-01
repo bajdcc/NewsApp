@@ -65,6 +65,39 @@ namespace NewsApp
                             _newsMachine.Overlay.Hide();
                         }
                     }),
+                new System.Windows.Forms.MenuItem("关闭新闻", (obj, args) =>
+                    {
+                        if (_newsMachine != null && _newsMachine.Overlay != null)
+                        {
+                            _newsMachine.Cancel(true);
+                        }
+                    }),
+                new System.Windows.Forms.MenuItem("背景透明", (obj, args) =>
+                    {
+                        NewsMachine.Settings.TransparentBackground = !NewsMachine.Settings.TransparentBackground;
+                        var _this = obj as System.Windows.Forms.MenuItem;
+                        _this.Checked = !_this.Checked;
+                        if (_newsMachine != null && _newsMachine.Overlay != null)
+                        {
+                            _newsMachine.Cancel(true);                            
+                        }
+                    })
+                {
+                    Checked = false
+                },
+                new System.Windows.Forms.MenuItem("鼠标穿透", (obj, args) =>
+                    {
+                        NewsMachine.Settings.TransparentWindow = !NewsMachine.Settings.TransparentWindow;
+                        var _this = obj as System.Windows.Forms.MenuItem;
+                        _this.Checked = !_this.Checked;
+                        if (_newsMachine != null && _newsMachine.Overlay != null)
+                        {
+                            _newsMachine.Cancel(true);
+                        }
+                    })
+                {
+                    Checked = true
+                },
                 new System.Windows.Forms.MenuItem("-"),
                 new System.Windows.Forms.MenuItem("手动刷新", (obj, args) =>
                     {
@@ -121,12 +154,15 @@ namespace NewsApp
 
         static public void TraceOutput(IMachineContext context, string msg)
         {
-            _msgQueue.Enqueue(msg);
-            if (_msgQueue.Count > MAX_LOG_LINES)
-                _msgQueue.Dequeue();
-            if (_this != null)
+            lock(_msgQueue)
             {
-                _this.InternTraceOutput(msg);
+                _msgQueue.Enqueue(msg);
+                if (_msgQueue.Count > MAX_LOG_LINES)
+                    _msgQueue.Dequeue();
+                if (_this != null)
+                {
+                    _this.InternTraceOutput(msg);
+                }
             }
         }
 
@@ -146,7 +182,7 @@ namespace NewsApp
         }
         private void InternClose()
         {
-            _newsMachine.Cancel();
+            _newsMachine.CloseOverlay(true);
             _newsMachine = null;
             notifyIcon.Dispose();
             notifyIcon = null;

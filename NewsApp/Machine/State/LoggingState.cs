@@ -18,10 +18,10 @@ namespace NewsApp.Machine.State
             return ("[" + this.decoratee.GetType().Name + "]");
         }
 
-        public void OnCancel()
+        public void OnCancel(bool shutdown)
         {
             this.context.Trace(this.GetStateName() + " OnCancel");
-            this.decoratee.OnCancel();
+            this.decoratee.OnCancel(shutdown);
         }
 
         public void OnMessage(NewsMessage msg)
