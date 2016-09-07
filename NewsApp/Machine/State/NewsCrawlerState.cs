@@ -94,6 +94,8 @@ namespace NewsApp.Machine.State
                 Trace("[Crawler] Error: " + ex.Message);
             }            
             index++;
+            if (index >= rss_feed_list.Count)
+                index = 0;
         }
     }
 }
