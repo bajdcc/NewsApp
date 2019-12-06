@@ -45,7 +45,7 @@ namespace NewsApp
             }
             else
             {
-                var length = 60 + Util.UIHelper.MeasureTextWidth("【】" + msg.Content + msg.Origin, TextBox.FontSize, TextBox.FontFamily.Source, TextBox.FontWeight);
+                var length = 60 + Util.UIHelper.MeasureTextWidth(this, "【】" + msg.Content + msg.Origin, TextBox.FontSize, TextBox.FontFamily.Source, TextBox.FontWeight);
                 OriginText.Text = msg.Origin;
                 ContentText.Text = msg.Content;
                 ContentLink.NavigateUri = msg.Uri;

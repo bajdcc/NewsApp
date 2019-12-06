@@ -24,7 +24,7 @@ namespace NewsApp.Machine.State
         }
 
         /// <summary>
-        /// From Baidu News Rss<see cref="http://www.baidu.com/search/rss.html"/>
+        /// From Baidu News Rss<see cref="http://www.people.com.cn/rss/opml.xml"/>
         /// </summary>
         private void InitRssFeed()
         {
